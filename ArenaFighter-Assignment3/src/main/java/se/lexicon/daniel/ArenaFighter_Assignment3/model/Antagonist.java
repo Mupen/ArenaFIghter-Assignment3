@@ -1,12 +1,12 @@
 package se.lexicon.daniel.ArenaFighter_Assignment3.model;
-import se.lexicon.daniel.ArenaFighter_Assignment3.service.CharacterAction;
+import se.lexicon.daniel.ArenaFighter_Assignment3.service.Characters;
 import se.lexicon.daniel.ArenaFighter_Assignment3.util.RandomGenerator;
 
 /**
  * Created by Daniel Henriksen.
  */
 
-public class Antagonist extends Combatant implements CharacterAction{
+public class Antagonist extends Combatant implements Characters{
 	
     public Antagonist(String name) {
         super(name);
@@ -17,7 +17,7 @@ public class Antagonist extends Combatant implements CharacterAction{
     	System.out.println("");
     }
 
-    public void GetAntagonistCreation(CharacterAction self) {
+    public void GetAntagonistCreation(Characters self) {
     	self.setStrenght(RandomGenerator.getRandomDecimal());
     	self.setAgility(RandomGenerator.getRandomDecimal());
     	self.setConstitution(RandomGenerator.getRandomDecimal());
@@ -28,7 +28,7 @@ public class Antagonist extends Combatant implements CharacterAction{
     }
     
     @Override
-	public CharacterAction RollInitiative(Protagonist currentProtagonist, Antagonist currentAntagonist) {
+	public Characters RollInitiative(Protagonist currentProtagonist, Antagonist currentAntagonist) {
     	System.out.println("");
     	System.out.println("|-----------------------------|");
     	System.out.println("| Roll Initiative Start Check |");
@@ -55,7 +55,7 @@ public class Antagonist extends Combatant implements CharacterAction{
 	}
     
     @Override
-    public void MeleeAttack(CharacterAction opponent) {
+    public void MeleeAttack(Characters opponent) {
     	System.out.println("");
     	System.out.println("|--------------------------|");
     	System.out.println("| Melee Attack Start Check |");

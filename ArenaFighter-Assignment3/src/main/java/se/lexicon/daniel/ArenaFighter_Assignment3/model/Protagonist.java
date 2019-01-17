@@ -1,5 +1,5 @@
 package se.lexicon.daniel.ArenaFighter_Assignment3.model;
-import se.lexicon.daniel.ArenaFighter_Assignment3.service.CharacterAction;
+import se.lexicon.daniel.ArenaFighter_Assignment3.service.Characters;
 import se.lexicon.daniel.ArenaFighter_Assignment3.util.KeyboardInput;
 import se.lexicon.daniel.ArenaFighter_Assignment3.util.RandomGenerator;
 
@@ -7,7 +7,7 @@ import se.lexicon.daniel.ArenaFighter_Assignment3.util.RandomGenerator;
  * Created by Daniel Henriksen.
  */
 
-public class Protagonist extends Combatant implements CharacterAction {
+public class Protagonist extends Combatant implements Characters {
 	
     public Protagonist(String name) {
         super(name);
@@ -18,7 +18,7 @@ public class Protagonist extends Combatant implements CharacterAction {
     	System.out.println("");
     }
     
-    public void GetProtagonistCreation(CharacterAction self, int amout, int times) {
+    public void GetProtagonistCreation(Characters self, int amout, int times) {
 		while((amout < times)) {
 			amout++;
     		String selection = KeyboardInput.getString(
@@ -64,7 +64,7 @@ public class Protagonist extends Combatant implements CharacterAction {
     }
     
     @Override
-	public CharacterAction RollInitiative(Protagonist currentProtagonist, Antagonist currentAntagonist) {
+	public Characters RollInitiative(Protagonist currentProtagonist, Antagonist currentAntagonist) {
     	System.out.println("");
     	System.out.println("|---------------------|");
     	System.out.println("| Roll For Initiative |");
@@ -82,16 +82,29 @@ public class Protagonist extends Combatant implements CharacterAction {
 	      
 		if (selfInitiative > opponentInitiative) {
 			System.out.println("[" + getName() + "]: Result: as victor");
+	        System.out.println("");
+	    	System.out.println("|------" + getName().replaceAll("[a-zA-Z\\s]", "-") + "--------------------------|");
+	    	System.out.println("| " + getName() + " What will he do? |");
+	    	System.out.println("|------" + getName().replaceAll("[a-zA-Z\\s]", "-") + "--------------------------|");
+	    	System.out.println("");
 			return currentProtagonist;
+
+
 	 	}
 		else {
 			System.out.println("[" + currentAntagonist.getName() + "]: Result: as victor");
+	        System.out.println("");
+	    	System.out.println("|------" + currentAntagonist.getName().replaceAll("[a-zA-Z\\s]", "-") + "--------------------------|");
+	    	System.out.println("| " + currentAntagonist.getName() + " What will you do? |");
+	    	System.out.println("|------" + currentAntagonist.getName().replaceAll("[a-zA-Z\\s]", "-") + "--------------------------|");
+	    	System.out.println("");
 			return currentAntagonist;
+
 		}
 	}
 
     @Override
-    public void MeleeAttack(CharacterAction opponent) {
+    public void MeleeAttack(Characters opponent) {
     	System.out.println("");
     	System.out.println("|--------------------------|");
     	System.out.println("| Melee Attack Start Check |");

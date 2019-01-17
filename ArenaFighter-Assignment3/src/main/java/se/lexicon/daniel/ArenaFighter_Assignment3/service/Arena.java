@@ -34,23 +34,94 @@ public class Arena {
 	    return currentAntagonist;
 	}
 	
-	public CharacterAction Initiative(Protagonist currentProtagonist, Antagonist currentAntagonist) {
+	public Characters Initiative(Protagonist currentProtagonist, Antagonist currentAntagonist) {
 		
-		CharacterAction initiativeWinner = currentProtagonist.RollInitiative(currentProtagonist, currentAntagonist);
+		Characters initiativeWinner = currentProtagonist.RollInitiative(currentProtagonist, currentAntagonist);
 		return initiativeWinner;
 	}
 
-	public void Fight(Protagonist currentProtagonist, Antagonist currentAntagonist, CharacterAction initiativeWinner) {
+	public void Fight(Protagonist currentProtagonist, Antagonist currentAntagonist, Characters initiativeWinner) {
+		if(initiativeWinner.equals(currentProtagonist)) {
+    		String selection = KeyboardInput.getString(
+    				"\n |------------" + currentProtagonist.getName() + " Character Action ------------| \n" +
+    				" What action do you want to take? \n" +
+    				"\n" +
+    				" [a] Attack \n" +
+    				" [s] Dodge \n" +
+    				" [d] Beg \n" +
+    				" [f] Brag \n" +
+    				" [g] investigate \n" +
+    				" [h] Hold turn \n" +
+    				"\n" +
+    				" Your selection... "
+    				);
+    		
+    		switch (selection.toLowerCase()) {
+				case "a":
+					currentProtagonist.MeleeAttack(currentAntagonist);
+					break;
+				case "s":
+					System.out.println("Its is meaningless to dodge when it's your turn...");
+					break;
+				case "d":
+					System.out.println("Its is meaningless to beg when you dont even know how to...");
+					break;
+				case "f":
+					System.out.println("Its is meaningless to brag when you dont even know how to...");
+					break;
+				case "g":
+					System.out.println("Its is meaningless as you can only attack but if you realy want it...");
+					currentAntagonist.getAttributes();
+					break;
+				case "h":
+					System.out.println("this is not complicated the only thing working in this game is attacking action do that next turn...");
+					break;
+				default:
+					break;
+    		}
+		}
 		
-		// while both is alive it will continue when it will say that the one that is alive.
+		if(initiativeWinner.equals(currentAntagonist)) {
+    		int selection = RandomGenerator.getRandomDecimal();
+    		
+    		switch (selection) {
+				case 1:
+				case 2:
+				case 3:
+				case 4:
+					currentProtagonist.MeleeAttack(currentAntagonist);
+					break;
+				case 6:
+					System.out.println("Its is meaningless to dodge when it's your turn...");
+					break;
+				case 7:
+					System.out.println("Its is meaningless to beg when you dont even know how to...");
+					break;
+				case 8:
+					System.out.println("Its is meaningless to brag when you dont even know how to...");
+					break;
+				case 9:
+					System.out.println("Its is meaningless as you can only attack but if you realy want it...");
+					currentAntagonist.getAttributes();
+					break;
+				case 10:
+					System.out.println("this is not complicated the only thing working in this game is attacking action do that next turn...");
+					break;
+				default:
+					break;
+    		}
+		}
+		
+/*		// while both is alive it will continue when it will say that the one that is alive.
 		// is the victor of the round and post it to the log.
-		while(currentProtagonist.isAlive(currentProtagonist) && currentAntagonist.isAlive(currentAntagonist)) {
+		while(currentProtagonist.isAlive(currentProtagonist) 
+				&& currentAntagonist.isAlive(currentAntagonist)) {
 			if(initiativeWinner.equals(currentProtagonist)) {
 				currentProtagonist.MeleeAttack(currentAntagonist);
 			}
 			else {
 				currentAntagonist.MeleeAttack(currentProtagonist);
 			}
-		}
+		}*/
 	}
 }

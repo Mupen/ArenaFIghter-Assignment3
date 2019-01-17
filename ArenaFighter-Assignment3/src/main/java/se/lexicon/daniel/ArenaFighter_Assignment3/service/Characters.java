@@ -3,13 +3,13 @@ package se.lexicon.daniel.ArenaFighter_Assignment3.service;
 import se.lexicon.daniel.ArenaFighter_Assignment3.model.Antagonist;
 import se.lexicon.daniel.ArenaFighter_Assignment3.model.Protagonist;
 
-public interface CharacterAction {
+public interface Characters {
 	
 	
 	
-	void MeleeAttack(CharacterAction opponent);
+	void MeleeAttack(Characters opponent);
 
-	CharacterAction RollInitiative(Protagonist currentProtagonist, Antagonist currentAntagonist);
+	Characters RollInitiative(Protagonist currentProtagonist, Antagonist currentAntagonist);
 	
 	int getMeleeAttack();
 	int getDodgeAttack();

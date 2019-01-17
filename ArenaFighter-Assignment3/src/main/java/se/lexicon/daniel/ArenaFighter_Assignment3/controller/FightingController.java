@@ -3,14 +3,14 @@ package se.lexicon.daniel.ArenaFighter_Assignment3.controller;
 import se.lexicon.daniel.ArenaFighter_Assignment3.model.Antagonist;
 import se.lexicon.daniel.ArenaFighter_Assignment3.model.Protagonist;
 import se.lexicon.daniel.ArenaFighter_Assignment3.service.Arena;
-import se.lexicon.daniel.ArenaFighter_Assignment3.service.CharacterAction;
+import se.lexicon.daniel.ArenaFighter_Assignment3.service.Characters;
 
 public class FightingController {
 	private Arena arena;
 	private boolean running;
 	private Protagonist currentProtagonist = null;
 	private Antagonist currentAntagonist = null;
-	private CharacterAction initiativeWinner = null;
+	private Characters initiativeWinner = null;
 	
 		
 	public FightingController() {

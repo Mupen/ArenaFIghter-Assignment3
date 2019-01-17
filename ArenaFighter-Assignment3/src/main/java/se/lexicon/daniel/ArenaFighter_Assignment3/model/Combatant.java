@@ -1,11 +1,11 @@
 package se.lexicon.daniel.ArenaFighter_Assignment3.model;
-import se.lexicon.daniel.ArenaFighter_Assignment3.service.CharacterAction;
+import se.lexicon.daniel.ArenaFighter_Assignment3.service.Characters;
 
 /**
  * Created by Daniel Henriksen.
  */
 
-public abstract class Combatant implements CharacterAction {
+public abstract class Combatant implements Characters {
     
 	// Attributes default if not changed
     private int strenght = 4;
