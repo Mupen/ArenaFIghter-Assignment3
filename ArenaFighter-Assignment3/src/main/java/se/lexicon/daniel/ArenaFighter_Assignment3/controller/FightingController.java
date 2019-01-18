@@ -8,9 +8,9 @@ import se.lexicon.daniel.ArenaFighter_Assignment3.service.Characters;
 public class FightingController {
 	private Arena arena;
 	private boolean running;
-	private Protagonist currentProtagonist = null;
-	private Antagonist currentAntagonist = null;
-	private Characters initiativeWinner = null;
+	private Protagonist currentProtagonist;
+	private Antagonist currentAntagonist;
+	private Characters initiativeWinner;
 	
 		
 	public FightingController() {
@@ -38,7 +38,9 @@ public class FightingController {
 		}
 		
 		// start Melee conflicts
+		while(currentProtagonist.isAlive(currentProtagonist) && currentAntagonist.isAlive(currentAntagonist)) {
 		arena.Fight(currentProtagonist, currentAntagonist, initiativeWinner);
+		}
 		
 		isStoping();
 	}

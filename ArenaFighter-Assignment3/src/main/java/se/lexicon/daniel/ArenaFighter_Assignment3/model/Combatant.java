@@ -26,7 +26,7 @@ public abstract class Combatant implements Characters {
     private int initiative = (int) Math.ceil((agility + perception) / 2); 
 
     private int meleeAttack = (int) Math.ceil((strenght + agility) / 2);
-    private int meleeDamage = (int) Math.ceil((strenght + weapon) / 2);
+    private int meleeDamage = (int) Math.ceil((strenght + weapon));
     
     // Normal String field
     private int level;
@@ -121,9 +121,6 @@ public abstract class Combatant implements Characters {
         return will;
     }
 
-
-
-    
     public Combatant(String name) {
         this.name = name;
     }
@@ -185,10 +182,13 @@ public abstract class Combatant implements Characters {
     }
 
     public int decreaseHealth(int opponentAttackPower) {
-    	if (this.armor > 0) {System.out.println("But i have armor that proteceted me for " + armor + "]");}
-    	else {System.out.println("But i dont have any armor i am going to take all of that damage...");}
     	health -= (opponentAttackPower - this.armor);
-        System.out.println("after the attack i have only " + health + " health left" );
+    	if (this.armor > 0) {
+    		System.out.println("[" + getName() + "]: Armor proteceded me for: [" + armor + "] and now have only: [" + health + "] health left");
+    		}
+    	else {
+    		System.out.println("[" + getName() + "]: Dont have armor and now have only: [" + health + "] health left");
+    		}
         return health;
     }
     

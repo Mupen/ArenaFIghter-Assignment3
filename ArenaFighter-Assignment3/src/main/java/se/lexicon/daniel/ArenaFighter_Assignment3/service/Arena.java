@@ -35,7 +35,6 @@ public class Arena {
 	}
 	
 	public Characters Initiative(Protagonist currentProtagonist, Antagonist currentAntagonist) {
-		
 		Characters initiativeWinner = currentProtagonist.RollInitiative(currentProtagonist, currentAntagonist);
 		return initiativeWinner;
 	}
@@ -59,6 +58,7 @@ public class Arena {
     		switch (selection.toLowerCase()) {
 				case "a":
 					currentProtagonist.MeleeAttack(currentAntagonist);
+					initiativeWinner = currentAntagonist;
 					break;
 				case "s":
 					System.out.println("Its is meaningless to dodge when it's your turn...");
@@ -83,45 +83,39 @@ public class Arena {
 		
 		if(initiativeWinner.equals(currentAntagonist)) {
     		int selection = RandomGenerator.getRandomDecimal();
-    		
     		switch (selection) {
 				case 1:
 				case 2:
 				case 3:
 				case 4:
-					currentProtagonist.MeleeAttack(currentAntagonist);
-					break;
+				case 5:
 				case 6:
+				case 7:
+				case 8:
+				case 9:
+				case 10:
+					currentAntagonist.MeleeAttack(currentProtagonist);
+					initiativeWinner = currentProtagonist;
+					break;
+				case 11:
 					System.out.println("Its is meaningless to dodge when it's your turn...");
 					break;
-				case 7:
+				case 12:
 					System.out.println("Its is meaningless to beg when you dont even know how to...");
 					break;
-				case 8:
+				case 13:
 					System.out.println("Its is meaningless to brag when you dont even know how to...");
 					break;
-				case 9:
+				case 14:
 					System.out.println("Its is meaningless as you can only attack but if you realy want it...");
 					currentAntagonist.getAttributes();
 					break;
-				case 10:
+				case 15:
 					System.out.println("this is not complicated the only thing working in this game is attacking action do that next turn...");
 					break;
 				default:
 					break;
     		}
 		}
-		
-/*		// while both is alive it will continue when it will say that the one that is alive.
-		// is the victor of the round and post it to the log.
-		while(currentProtagonist.isAlive(currentProtagonist) 
-				&& currentAntagonist.isAlive(currentAntagonist)) {
-			if(initiativeWinner.equals(currentProtagonist)) {
-				currentProtagonist.MeleeAttack(currentAntagonist);
-			}
-			else {
-				currentAntagonist.MeleeAttack(currentProtagonist);
-			}
-		}*/
 	}
 }

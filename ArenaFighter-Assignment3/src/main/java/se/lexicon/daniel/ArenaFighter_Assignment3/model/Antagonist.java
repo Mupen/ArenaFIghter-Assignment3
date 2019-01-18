@@ -84,10 +84,9 @@ public class Antagonist extends Combatant implements Characters{
 			setAlive(true);
 			return this.isAlive();
 		}
-		if(getHealth() < (-10)) {
+		if(getHealth() < (-5)) {
 			System.out.println(currentAntagonist.getName() + " have died...");
 			setAlive(false);
-			currentAntagonist = null;
 			return this.isAlive();
 		}
 		else {

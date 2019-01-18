@@ -132,7 +132,7 @@ public class Protagonist extends Combatant implements Characters {
 			setAlive(true);
 			return this.isAlive();
 		}
-		if(getHealth() < (-10)) {
+		if(getHealth() < (-5)) {
 			System.out.println(currentProtagonist.getName() + " have died...");
 			setAlive(false);
 			currentProtagonist = null;
