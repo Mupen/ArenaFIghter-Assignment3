@@ -1,32 +1,26 @@
-package se.lexicon.daniel.ArenaFighter_Assignment3.service;
+package se.lexicon.daniel.ArenaFighter_Assignment3.model;
 
-import se.lexicon.daniel.ArenaFighter_Assignment3.model.Antagonist;
-import se.lexicon.daniel.ArenaFighter_Assignment3.model.Protagonist;
+/**
+ * Created by Daniel Henriksen.
+ */
 
-public interface Characters {
-	
-	
-	
-	void MeleeAttack(Characters opponent);
-
-	Characters RollInitiative(Protagonist currentProtagonist, Antagonist currentAntagonist);
-	
-	int getMeleeAttack();
-	int getDodgeAttack();
-	int getInitiative();
-	int getHealth();
+public interface CombatantSignatures {
 	
     String getName();
-    
 	
+    // Health related signatures
+    int getHealth();
     int increaseHealth(int additionalHealth);
     int decreaseHealth(int opponentAttackPower);
     
+    // Gain level
     int gainLevel(int level);
-    
-	int setArmor(int grade);
+	
+    // set armor and weapon grade
+    int setArmor(int grade);
 	int setWeapon(int grade);
 	
+	// Gain attributes
     int gainStrenght(int i);
     int gainAgility(int i);
     int gainConstitution(int i);
@@ -34,13 +28,12 @@ public interface Characters {
     int gainPerception(int i);
     int gainWill(int i);
     
+    // set attributes
     void setStrenght(int i);
     void setAgility(int i);
     void setConstitution(int i);
     void setCharisma(int i);
     void setPerception(int i);
     void setWill(int i);
-
-	
 
 }

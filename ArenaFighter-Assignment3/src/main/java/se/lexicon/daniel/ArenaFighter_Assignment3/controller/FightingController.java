@@ -3,18 +3,17 @@ package se.lexicon.daniel.ArenaFighter_Assignment3.controller;
 import se.lexicon.daniel.ArenaFighter_Assignment3.model.Antagonist;
 import se.lexicon.daniel.ArenaFighter_Assignment3.model.Protagonist;
 import se.lexicon.daniel.ArenaFighter_Assignment3.service.Arena;
-import se.lexicon.daniel.ArenaFighter_Assignment3.service.Characters;
+import se.lexicon.daniel.ArenaFighter_Assignment3.service.FightingService;
+import se.lexicon.daniel.ArenaFighter_Assignment3.service.FightingServiceSignatures;
 
 public class FightingController {
-	private Arena arena;
+	private FightingServiceSignatures fightingServiceInstance;
 	private boolean running;
 	private Protagonist currentProtagonist;
 	private Antagonist currentAntagonist;
-	private Characters initiativeWinner;
-	
 		
 	public FightingController() {
-		arena = new Arena();
+		fightingServiceInstance = FightingService.getFightingServiceInstance();
 		running = true;
 	}
 
@@ -27,6 +26,7 @@ public class FightingController {
 	}
 	
 	public void run() {
+		
 		
 		// If null initializen objects 
 		if(currentProtagonist == null) {currentProtagonist = arena.ProtagonistCreation();}

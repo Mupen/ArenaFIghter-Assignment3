@@ -1,11 +1,10 @@
 package se.lexicon.daniel.ArenaFighter_Assignment3.model;
-import se.lexicon.daniel.ArenaFighter_Assignment3.service.Characters;
 
 /**
  * Created by Daniel Henriksen.
  */
 
-public abstract class Combatant implements Characters {
+public abstract class Combatant implements CombatantSignatures {
     
 	// Attributes default if not changed
     private int strenght = 4;
@@ -15,9 +14,14 @@ public abstract class Combatant implements Characters {
     private int perception = 4;
     private int will = 4;
     
-    private int armor = 2; // 2 normal 4 good 6 verry good
-    private int weapon = 2; // 2 normal 4 good 6 verry good
-	
+    // Weapons and Armor
+    private int armor; 
+    private String armorDescription;
+    
+    private int weapon;
+    private String weaponDescription;
+    
+    
     // incremental derivatives of attributes and method with as default
     private boolean isAlive = true;
     private int health = (constitution + will + 10 + getLevel());
@@ -42,15 +46,13 @@ public abstract class Combatant implements Characters {
 						   "\n Will: " + getWill());
     }
     
-    // Attributes getter and setters, gains
+    // Attributes getter, gainers and setters
     public int getStrenght() {
 		return strenght;
 	}
-
 	public void setStrenght(int strenght) {
 		this.strenght = strenght;
 	}
-	
     public int gainStrenght(int strenght) {
         this.strenght += strenght;
         return strenght;
@@ -59,24 +61,20 @@ public abstract class Combatant implements Characters {
 	public int getAgility() {
 		return agility;
 	}
-
 	public void setAgility(int agility) {
 		this.agility = agility;
 	}
-	
     public int gainAgility(int agility) {
         this.agility += agility;
         return agility;
     }
-
-	public int getConstitution() {
+	
+    public int getConstitution() {
 		return constitution;
 	}
-
 	public void setConstitution(int constitution) {
 		this.constitution = constitution;
 	}
-	
     public int gainConstitution(int constitution) {
         this.constitution += constitution;
         return constitution;
@@ -85,11 +83,9 @@ public abstract class Combatant implements Characters {
 	public int getCharisma() {
 		return charisma;
 	}
-
 	public void setCharisma(int charisma) {
 		this.charisma = charisma;
 	}
-	
     public int gainCharisma(int charisma) {
         this.charisma += charisma;
         return charisma;
@@ -98,11 +94,9 @@ public abstract class Combatant implements Characters {
 	public int getPerception() {
 		return perception;
 	}
-
 	public void setPerception(int perception) {
 		this.perception = perception;
 	}
-	
     public int gainPerception(int perception) {
         this.perception += perception;
         return perception;
@@ -111,20 +105,19 @@ public abstract class Combatant implements Characters {
 	public int getWill() {
 		return will;
 	}
-
 	public void setWill(int will) {
 		this.will = will;
 	}
-	
     public int gainWill(int will) {
         this.will += will;
         return will;
     }
 
+    // Constructor
     public Combatant(String name) {
         this.name = name;
     }
-
+    
     public String getName() {
         return name;
     }
@@ -132,7 +125,6 @@ public abstract class Combatant implements Characters {
 	public int getInitiative() {
 		return initiative;
 	}
-
 	public void setInitiative(int initiative) {
 		this.initiative = initiative;
 	}
@@ -140,7 +132,6 @@ public abstract class Combatant implements Characters {
     public int getDodgeAttack() {
         return dodgeAttack;
     }
-    
 	public void setDodgeAttack(int dodgeAttack) {
 		this.dodgeAttack = dodgeAttack;
 	}
@@ -148,7 +139,6 @@ public abstract class Combatant implements Characters {
     public int getArmor() {
     	return armor;
     }
-    
     public int setArmor(int armor) {
     	return this.armor = armor;
     }
@@ -156,7 +146,6 @@ public abstract class Combatant implements Characters {
 	public int getWeapon() {
 		return weapon;
 	}
-	
     public int setWeapon(int weapon) {
     	return this.weapon = weapon;
     }
@@ -164,7 +153,6 @@ public abstract class Combatant implements Characters {
     public int getLevel() {
         return level;
     }
-
     public int gainLevel(int level) {
         this.level += level;
         System.out.println(" " + name + ": I've been experiencing a lot. My level is currently = " + this.level);
@@ -174,13 +162,11 @@ public abstract class Combatant implements Characters {
     public int getHealth() {
         return health;
     }
-
     public int increaseHealth(int additionalHealth) {
         health += additionalHealth;
         System.out.println(" " + name + ": I've been healed. My health now = " + health);
         return health;
     }
-
     public int decreaseHealth(int opponentAttackPower) {
     	health -= (opponentAttackPower - this.armor);
     	if (this.armor > 0) {
@@ -195,11 +181,9 @@ public abstract class Combatant implements Characters {
     public int getMeleeAttack() {
         return meleeAttack;
     }
-    
 	public int getMeleeDamage() {
 		return meleeDamage;
 	}
-
 	public void setMeleeDamage(int meleeDamage) {
 		this.meleeDamage = meleeDamage;
 	}
@@ -245,10 +229,39 @@ public abstract class Combatant implements Characters {
 	}
 
 	public boolean isAlive() {
-		return isAlive;
+		if(getHealth() > 0) {
+			setAlive(true);
+			return this.isAlive();
+		}
+		if(getHealth() < (-5)) {
+			System.out.println(getName() + " Have died...");
+			setAlive(false);
+			return this.isAlive();
+		}
+		else {
+			System.out.println(getName() + " have fallen un conscious...");
+			setAlive(true);
+			return this.isAlive();
+		}
 	}
-
+	
 	public void setAlive(boolean isAlive) {
 		this.isAlive = isAlive;
+	}
+
+	public String getArmorDescription() {
+		return armorDescription;
+	}
+
+	public void setArmorDescription(String armorDescription) {
+		this.armorDescription = armorDescription;
+	}
+
+	public String getWeaponDescription() {
+		return weaponDescription;
+	}
+
+	public void setWeaponDescription(String weaponDescription) {
+		this.weaponDescription = weaponDescription;
 	}
 }

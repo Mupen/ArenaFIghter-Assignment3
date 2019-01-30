@@ -1,5 +1,6 @@
 package se.lexicon.daniel.ArenaFighter_Assignment3.service;
 import se.lexicon.daniel.ArenaFighter_Assignment3.model.Antagonist;
+import se.lexicon.daniel.ArenaFighter_Assignment3.model.Characters;
 import se.lexicon.daniel.ArenaFighter_Assignment3.model.Protagonist;
 import se.lexicon.daniel.ArenaFighter_Assignment3.util.KeyboardInput;
 import se.lexicon.daniel.ArenaFighter_Assignment3.util.RandomGenerator;
