@@ -15,6 +15,10 @@ public interface CombatantSignatures {
     
     // Gain level
     int gainLevel(int level);
+    int getMeleeAttack();
+    int getMeleeDamage();
+    int getDodgeAttack();
+    int getInitiative();
 	
     // set armor and weapon grade
     int setArmor(int grade);

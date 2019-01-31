@@ -2,9 +2,10 @@ package se.lexicon.daniel.ArenaFighter_Assignment3.controller;
 
 import se.lexicon.daniel.ArenaFighter_Assignment3.model.Antagonist;
 import se.lexicon.daniel.ArenaFighter_Assignment3.model.Protagonist;
-import se.lexicon.daniel.ArenaFighter_Assignment3.service.Arena;
 import se.lexicon.daniel.ArenaFighter_Assignment3.service.FightingService;
 import se.lexicon.daniel.ArenaFighter_Assignment3.service.FightingServiceSignatures;
+import se.lexicon.daniel.ArenaFighter_Assignment3.util.KeyboardInput;
+import se.lexicon.daniel.ArenaFighter_Assignment3.util.RandomGenerator;
 
 public class FightingController {
 	private FightingServiceSignatures fightingServiceInstance;
@@ -14,6 +15,7 @@ public class FightingController {
 		
 	public FightingController() {
 		fightingServiceInstance = FightingService.getFightingServiceInstance();
+
 		running = true;
 	}
 
@@ -27,21 +29,42 @@ public class FightingController {
 	
 	public void run() {
 		
+		fightingServiceInstance.CombatantCreation();
 		
-		// If null initializen objects 
-		if(currentProtagonist == null) {currentProtagonist = arena.ProtagonistCreation();}
-		if(currentAntagonist == null) {currentAntagonist = arena.AntagonistCreation();}
+		currentProtagonist = fightingServiceInstance.GetProtagonistObject();
+		currentAntagonist = fightingServiceInstance.GetAntagonistObject();
 		
-		// Start Initiative Conflicts
-		if(initiativeWinner == null) {
-			initiativeWinner = arena.Initiative(currentProtagonist, currentAntagonist);
-		}
+		fightingServiceInstance.CombatantInitiative();
 		
-		// start Melee conflicts
-		while(currentProtagonist.isAlive(currentProtagonist) && currentAntagonist.isAlive(currentAntagonist)) {
-		arena.Fight(currentProtagonist, currentAntagonist, initiativeWinner);
+		while(currentProtagonist.isAlive() && currentAntagonist.isAlive()) {
+			if (currentProtagonist.getTurns() <= currentAntagonist.getTurns()) {
+				if (currentProtagonist.getHealth() > -currentProtagonist.getConstitution()) {fightingServiceInstance.MeleeAttack(currentProtagonist, currentAntagonist); }
+				currentProtagonist.gainTurns(1);
+			}
+			else if (currentProtagonist.getTurns() >= currentAntagonist.getTurns()) {
+				if (currentAntagonist.getHealth() > -currentAntagonist.getConstitution()) {fightingServiceInstance.MeleeAttack(currentAntagonist, currentProtagonist); }
+				currentAntagonist.gainTurns(1);
+			}
 		}
 		
 		isStoping();
+		
+//		// If null initializen objects 
+//		if(currentProtagonist == null) {currentProtagonist = arena.ProtagonistCreation();}
+//		if(currentAntagonist == null) {currentAntagonist = arena.AntagonistCreation();}
+//		
+//		// Start Initiative Conflicts
+//		if(initiativeWinner == null) {
+//			initiativeWinner = arena.Initiative(currentProtagonist, currentAntagonist);
+//		}
+//		
+//		// start Melee conflicts
+//		while(currentProtagonist.isAlive(currentProtagonist) && currentAntagonist.isAlive(currentAntagonist)) {
+//		arena.Fight(currentProtagonist, currentAntagonist, initiativeWinner);
+//		}
+//		
+//		isStoping();
 	}
+	
+
 }

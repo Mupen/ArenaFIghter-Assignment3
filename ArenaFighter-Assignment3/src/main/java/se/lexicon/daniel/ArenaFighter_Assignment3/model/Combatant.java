@@ -34,6 +34,7 @@ public abstract class Combatant implements CombatantSignatures {
     
     // Normal String field
     private int level;
+    private int turns;
     private String name;
     
     public void getAttributes() {
@@ -231,18 +232,14 @@ public abstract class Combatant implements CombatantSignatures {
 	public boolean isAlive() {
 		if(getHealth() > 0) {
 			setAlive(true);
-			return this.isAlive();
+			return isAlive;
 		}
-		if(getHealth() < (-5)) {
+		if(getHealth() < 0) {
 			System.out.println(getName() + " Have died...");
 			setAlive(false);
-			return this.isAlive();
+			return isAlive;
 		}
-		else {
-			System.out.println(getName() + " have fallen un conscious...");
-			setAlive(true);
-			return this.isAlive();
-		}
+		return isAlive;
 	}
 	
 	public void setAlive(boolean isAlive) {
@@ -263,5 +260,18 @@ public abstract class Combatant implements CombatantSignatures {
 
 	public void setWeaponDescription(String weaponDescription) {
 		this.weaponDescription = weaponDescription;
+	}
+
+	public int getTurns() {
+		return turns;
+	}
+
+	public void setTurns(int turns) {
+		this.turns = turns;
+	}
+	
+	public int gainTurns(int turns) {
+        this.turns += turns;
+        return turns;
 	}
 }
