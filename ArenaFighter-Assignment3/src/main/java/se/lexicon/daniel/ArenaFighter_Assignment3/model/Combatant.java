@@ -15,12 +15,12 @@ public abstract class Combatant implements CombatantSignatures {
     private int will = 4;
     
     // Weapons and Armor
-    private int armor; 
-    private String armorDescription;
+    private int armor = 2; 
+    private String armorDescription = "The aketon is a padded armor specifically made to be worn as an outer layer. It's very thick and cannot be worn under anything. As a stand-alone armor, it's fairly decent, considering its low price. It's the go to armor for poor infantry.";
     
-    private int weapon;
-    private String weaponDescription;
-    
+    private int weapon = 2;
+    private String weaponDescription = "The gladius is the perfected form of the earliest attempts of making a standard military sidearm. It had a broad blade that allowed it to apply some weight behind a chop, but was not a particularly good slashing weapon - though unlike its predecessors, it was specifically designed for thrusting, and was good at getting through contemporary armor.";
+
     
     // incremental derivatives of attributes and method with as default
     private boolean isAlive = true;
@@ -28,9 +28,9 @@ public abstract class Combatant implements CombatantSignatures {
    
     private int dodgeAttack = (int) Math.ceil((agility + perception) / 2);
     private int initiative = (int) Math.ceil((agility + perception) / 2); 
-
     private int meleeAttack = (int) Math.ceil((strenght + agility) / 2);
-    private int meleeDamage = (int) Math.ceil((strenght + weapon));
+    private int meleeDamage = (int) Math.ceil((strenght +  + weapon));
+    private int meleeDamageReduction = (int) Math.ceil((constitution/2) +  + weapon);
     
     // Normal String field
     private int level;
@@ -169,13 +169,7 @@ public abstract class Combatant implements CombatantSignatures {
         return health;
     }
     public int decreaseHealth(int opponentAttackPower) {
-    	health -= (opponentAttackPower - this.armor);
-    	if (this.armor > 0) {
-    		System.out.println("[" + getName() + "]: Armor proteceded me for: [" + armor + "] and now have only: [" + health + "] health left");
-    		}
-    	else {
-    		System.out.println("[" + getName() + "]: Dont have armor and now have only: [" + health + "] health left");
-    		}
+    	health -= (opponentAttackPower - this.meleeDamageReduction);
         return health;
     }
     
@@ -273,5 +267,13 @@ public abstract class Combatant implements CombatantSignatures {
 	public int gainTurns(int turns) {
         this.turns += turns;
         return turns;
+	}
+
+	public int getMeleeDamageReduction() {
+		return meleeDamageReduction;
+	}
+
+	public void setMeleeDamageReduction(int meleeDamageReduction) {
+		this.meleeDamageReduction = meleeDamageReduction;
 	}
 }

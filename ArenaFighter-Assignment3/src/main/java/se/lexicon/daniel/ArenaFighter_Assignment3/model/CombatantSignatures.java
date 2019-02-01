@@ -17,13 +17,24 @@ public interface CombatantSignatures {
     int gainLevel(int level);
     int getMeleeAttack();
     int getMeleeDamage();
+    int getMeleeDamageReduction();
     int getDodgeAttack();
     int getInitiative();
 	
     // set armor and weapon grade
     int setArmor(int grade);
+    int getArmor();
 	int setWeapon(int grade);
+    int getWeapon();
 	
+	// Get attributes
+    int getStrenght();
+    int getAgility();
+    int getConstitution();
+    int getCharisma();
+    int getPerception();
+    int getWill();
+    
 	// Gain attributes
     int gainStrenght(int i);
     int gainAgility(int i);

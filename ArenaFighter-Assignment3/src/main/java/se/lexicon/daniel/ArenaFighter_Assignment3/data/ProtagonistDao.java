@@ -51,15 +51,13 @@ public class ProtagonistDao implements ProtagonistDaoSignatures {
 	
 	@Override
 	public int ProtagonistMeleeAttack(CombatantSignatures attacker) {
-		System.out.println("Test ProtagonistMeleeAttack");
-		return 8;
+		return attacker.getMeleeAttack();
 		
 	}
 	
 	@Override
 	public int ProtagonistMeleeDefence(CombatantSignatures defender) {
-		System.out.println("Test ProtagonistMeleeDefence");
-		return 8;
+		return defender.getDodgeAttack();
 		
 	}
 

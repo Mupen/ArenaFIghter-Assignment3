@@ -47,13 +47,11 @@ public class AntagonistDao implements AntagonistDaoSignatures {
 	
 	@Override
 	public int AntagonistMeleeAttack(CombatantSignatures attacker) {
-		System.out.println("Test AntagonistMeleeAttack");
 		return attacker.getMeleeAttack();
 	}
 	
 	@Override
-	public int AntagonistMeleeDefence(CombatantSignatures attacker) {
-		System.out.println("Test AntagonistMeleeDefence");
-		return 5;
+	public int AntagonistMeleeDefence(CombatantSignatures defender) {
+		return defender.getDodgeAttack();
 	}
 }

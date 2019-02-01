@@ -40,19 +40,20 @@ public class FightingService implements FightingServiceSignatures{
 		
 		int currentProtagonistInitiative = currentProtagonist.getInitiative() + RandomGenerator.getRandomDecimal();
 		int currentAntagonistInitiative = currentAntagonist.getInitiative() + RandomGenerator.getRandomDecimal();
+		CombatantSignatures InitiativeWinner = null;
 		
 		if (currentProtagonistInitiative > currentAntagonistInitiative) {
 			MeleeAttack(currentProtagonist, currentAntagonist);
-			currentProtagonist.gainTurns(1);
+			InitiativeWinner = currentProtagonist;
 		}
 		else if (currentProtagonistInitiative < currentAntagonistInitiative) {
 			MeleeAttack(currentAntagonist, currentProtagonist);
-			currentAntagonist.gainTurns(1);
+			InitiativeWinner = currentAntagonist;
 		}
 		else if (currentProtagonistInitiative == currentAntagonistInitiative) {
 			fightingServiceInstance.CombatantInitiative();
 		}
-		return null;
+		return InitiativeWinner;
 	}
 	
 	@Override
@@ -67,23 +68,39 @@ public class FightingService implements FightingServiceSignatures{
 	
 	@Override
 	public void MeleeAttack(CombatantSignatures attacker, CombatantSignatures defender) {
+
 		int attackValue = 0, defenceValue = 0;
 		
 		if(attacker.equals(protagonistDaoSignaturesObject.GetProtagonist())) {
 			attackValue = protagonistDaoSignaturesObject.ProtagonistMeleeAttack(attacker);
 			defenceValue = antagonistDaoSignaturesObject.AntagonistMeleeDefence(defender);
-			
 		}
+		
 		else if(attacker.equals(antagonistDaoSignaturesObject.GetAntagonist())) {
 			attackValue = antagonistDaoSignaturesObject.AntagonistMeleeAttack(attacker);
 			defenceValue = protagonistDaoSignaturesObject.ProtagonistMeleeDefence(defender);
 		}
 		
 		if (attackValue >= defenceValue) {
-			System.out.println(attacker.getName() + "["+ attackValue +"] Successfully bypassed his opponents defense of" + "["+ defenceValue + "]");
+			System.out.println("");
+			System.out.println("|------" + attacker.getName().replaceAll("[a-zA-Z\\s]", "-") + "-" + defender.getName().replaceAll("[a-zA-Z\\s]", "-") + "-----|");
+			System.out.println("| " + attacker.getName() + " Attacks! " + defender.getName() + " |");
+			System.out.println("|------" + attacker.getName().replaceAll("[a-zA-Z\\s]", "-") + "-" + defender.getName().replaceAll("[a-zA-Z\\s]", "-") + "-----|");
+			System.out.println("");
+			
+			System.out.println("[" + attacker.getName() + "]: attack with his weapon and ["+ attackValue +"] Successfully bypassed his opponents defense of " + "["+ defenceValue + "]");
+			System.out.println("[" + attacker.getName() + "]: deal ["+ attacker.getMeleeDamage() +"] in damage ");
+			
+			defender.decreaseHealth(attacker.getMeleeDamage());
+	    	if (defender.getArmor() > 0) {
+	    		System.out.println("[" + defender.getName() + "]: Armor and constitution protecteded him for: [" + defender.getMeleeDamageReduction() + "] and now have only: [" + defender.getHealth() + "] health left");}
+	    	else {
+	    		System.out.println("[" + defender.getName() + "]: Constitution that protecteded him for: [" + defender.getMeleeDamageReduction() + "] and now have only: [" + defender.getHealth() + "] health left");}
 		}
+		
 		else if (attackValue < defenceValue) {
-			System.out.println(defender.getName() + "["+ defenceValue +"] Successfully blocked his opponents attack of" + "["+ attackValue + "]");
+			System.out.println("[" + defender.getName() + "]: ["+ defenceValue +"] Successfully blocked his opponents attack of " + "["+ attackValue + "]");
 		}
+		
 	}
 }
