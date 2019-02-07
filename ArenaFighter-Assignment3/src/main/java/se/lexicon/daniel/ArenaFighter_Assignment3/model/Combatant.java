@@ -1,5 +1,7 @@
 package se.lexicon.daniel.ArenaFighter_Assignment3.model;
 
+import java.util.List;
+
 /**
  * Created by Daniel Henriksen.
  */
@@ -14,14 +16,12 @@ public abstract class Combatant implements CombatantSignatures {
     private int perception = 4;
     private int will = 4;
     
-    // Weapons and Armor
-    private int armor = 2; 
-    private String armorDescription = "The aketon is a padded armor specifically made to be worn as an outer layer. It's very thick and cannot be worn under anything. As a stand-alone armor, it's fairly decent, considering its low price. It's the go to armor for poor infantry.";
+    // Weapons and Armor, History objects
+    private Armor armor; 
+    private Weapon weapon;
+    private History history;
     
-    private int weapon = 2;
-    private String weaponDescription = "The gladius is the perfected form of the earliest attempts of making a standard military sidearm. It had a broad blade that allowed it to apply some weight behind a chop, but was not a particularly good slashing weapon - though unlike its predecessors, it was specifically designed for thrusting, and was good at getting through contemporary armor.";
 
-    
     // incremental derivatives of attributes and method with as default
     private boolean isAlive = true;
     private int health = (constitution + will + 10 + getLevel());
@@ -29,13 +29,16 @@ public abstract class Combatant implements CombatantSignatures {
     private int dodgeAttack = (int) Math.ceil((agility + perception) / 2);
     private int initiative = (int) Math.ceil((agility + perception) / 2); 
     private int meleeAttack = (int) Math.ceil((strenght + agility) / 2);
-    private int meleeDamage = (int) Math.ceil((strenght +  + weapon));
+    private int meleeDamage = (int) Math.ceil((strenght + weapon));
     private int meleeDamageReduction = (int) Math.ceil((constitution/2) +  + weapon);
     
     // Normal String field
     private int level;
     private int turns;
     private String name;
+    
+
+
     
     public void getAttributes() {
     	System.out.println("------------" + getName() + " Character Attributes ------------" +
@@ -58,7 +61,6 @@ public abstract class Combatant implements CombatantSignatures {
         this.strenght += strenght;
         return strenght;
     }
-
 	public int getAgility() {
 		return agility;
 	}
@@ -137,20 +139,6 @@ public abstract class Combatant implements CombatantSignatures {
 		this.dodgeAttack = dodgeAttack;
 	}
     
-    public int getArmor() {
-    	return armor;
-    }
-    public int setArmor(int armor) {
-    	return this.armor = armor;
-    }
-    
-	public int getWeapon() {
-		return weapon;
-	}
-    public int setWeapon(int weapon) {
-    	return this.weapon = weapon;
-    }
-	
     public int getLevel() {
         return level;
     }
@@ -240,21 +228,6 @@ public abstract class Combatant implements CombatantSignatures {
 		this.isAlive = isAlive;
 	}
 
-	public String getArmorDescription() {
-		return armorDescription;
-	}
-
-	public void setArmorDescription(String armorDescription) {
-		this.armorDescription = armorDescription;
-	}
-
-	public String getWeaponDescription() {
-		return weaponDescription;
-	}
-
-	public void setWeaponDescription(String weaponDescription) {
-		this.weaponDescription = weaponDescription;
-	}
 
 	public int getTurns() {
 		return turns;
@@ -276,4 +249,14 @@ public abstract class Combatant implements CombatantSignatures {
 	public void setMeleeDamageReduction(int meleeDamageReduction) {
 		this.meleeDamageReduction = meleeDamageReduction;
 	}
+
+	public History getHistory() {
+		return history;
+	}
+
+	public void setHistory(History history) {
+		this.history = history;
+	}
+
+
 }

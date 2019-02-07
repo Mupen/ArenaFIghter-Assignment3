@@ -1,5 +1,7 @@
 package se.lexicon.daniel.ArenaFighter_Assignment3.model;
 
+import java.util.List;
+
 /**
  * Created by Daniel Henriksen.
  */
@@ -26,6 +28,9 @@ public interface CombatantSignatures {
     int getArmor();
 	int setWeapon(int grade);
     int getWeapon();
+    
+    // History 
+    List setHistory(String string);
 	
 	// Get attributes
     int getStrenght();
@@ -50,5 +55,9 @@ public interface CombatantSignatures {
     void setCharisma(int i);
     void setPerception(int i);
     void setWill(int i);
+
+	void addHistory(String string);
+
+	int getTurns();
 
 }
