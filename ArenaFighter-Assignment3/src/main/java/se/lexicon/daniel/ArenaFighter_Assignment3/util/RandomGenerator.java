@@ -16,7 +16,7 @@ public class RandomGenerator {
 		return arrayStrings[randomIndex];
 	}
 	
-    public static int getRandomDecimal() {
-        return generator.nextInt(10-1) + 1;
+    public static int getRandomDecimal(int min, int max) {
+        return generator.nextInt(max-min) + min;
     }
 }

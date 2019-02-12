@@ -1,9 +1,11 @@
 package se.lexicon.daniel.ArenaFighter_Assignment3.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Daniel Henriksen.
+ * @param <FightingLedger>
  */
 
 public abstract class Combatant implements CombatantSignatures {
@@ -16,28 +18,34 @@ public abstract class Combatant implements CombatantSignatures {
     private int perception = 4;
     private int will = 4;
     
+    // Normal String field
+    private int level = 1;
+    private int turn = 0;
+    private String name;
+    
     // Weapons and Armor, History objects
     private Armor armor; 
     private Weapon weapon;
-    private History history;
+    private FightingLedger fightingLedger;
+    private List<FightingLedger> fightingLedgerStorage = new ArrayList<>();
     
+    
+	public List<FightingLedger> getFightingLedgerStorage() {return fightingLedgerStorage;}
+	public void addToFightingLedgerStorage(FightingLedger fightingLedger) {fightingLedgerStorage.add(fightingLedger);}
+	public FightingLedger getFightingLedger() {return fightingLedger;}
+	public void setFightingLedger(int round, String attacker, int attackValue, String dodger, int dodgeValue, int damage, int damageReductionn, int healthLeft) {
+		this.fightingLedger = new FightingLedger(round, attacker, attackValue, dodger, dodgeValue, damage, damageReductionn, healthLeft);
+	}
 
-    // incremental derivatives of attributes and method with as default
+    // Incremental derivatives of attributes and method with as default
     private boolean isAlive = true;
     private int health = (constitution + will + 10 + getLevel());
-   
-    private int dodgeAttack = (int) Math.ceil((agility + perception) / 2);
-    private int initiative = (int) Math.ceil((agility + perception) / 2); 
-    private int meleeAttack = (int) Math.ceil((strenght + agility) / 2);
-    private int meleeDamage = (int) Math.ceil((strenght + weapon));
-    private int meleeDamageReduction = (int) Math.ceil((constitution/2) +  + weapon);
+    private int initiative = (int) Math.ceil((agility + perception)/2); 
+    private int attack = (int) Math.ceil((strenght + agility)/2);
+    private int dodge = (int) Math.ceil((agility + perception)/2);
+    private int meleeDamage;
+    private int meleeDamageReduction;
     
-    // Normal String field
-    private int level;
-    private int turns;
-    private String name;
-    
-
 
     
     public void getAttributes() {
@@ -49,128 +57,115 @@ public abstract class Combatant implements CombatantSignatures {
 						   "\n Perception: " + getPerception() + 
 						   "\n Will: " + getWill());
     }
+      
+    // getStrenght
+    public int getStrenght() {return strenght;}
+	public void setStrenght(int strenght) {this.strenght = strenght;}
+    public int gainStrenght(int strenght) {this.strenght += strenght; return strenght;}
+    // getAgility    
+	public int getAgility() {return agility;}
+	public void setAgility(int agility) {this.agility = agility;}
+    public int gainAgility(int agility) {this.agility += agility; return agility;}
+    // getConstitution   
+    public int getConstitution() {return constitution;}
+	public void setConstitution(int constitution) {this.constitution = constitution;}
+    public int gainConstitution(int constitution) {this.constitution += constitution; return constitution;}
+    // getCharisma   
+	public int getCharisma() {return charisma;}
+	public void setCharisma(int charisma) {this.charisma = charisma;}
+    public int gainCharisma(int charisma) {this.charisma += charisma; return charisma;}
+    // getPerception   
+	public int getPerception() {return perception;}
+	public void setPerception(int perception) {this.perception = perception;}
+    public int gainPerception(int perception) {this.perception += perception; return perception;}
+    // getWill   
+	public int getWill() {return will;}
+	public void setWill(int will) {this.will = will;}
+    public int gainWill(int will) {this.will += will; return will;}
     
-    // Attributes getter, gainers and setters
-    public int getStrenght() {
-		return strenght;
-	}
-	public void setStrenght(int strenght) {
-		this.strenght = strenght;
-	}
-    public int gainStrenght(int strenght) {
-        this.strenght += strenght;
-        return strenght;
-    }
-	public int getAgility() {
-		return agility;
-	}
-	public void setAgility(int agility) {
-		this.agility = agility;
-	}
-    public int gainAgility(int agility) {
-        this.agility += agility;
-        return agility;
-    }
-	
-    public int getConstitution() {
-		return constitution;
-	}
-	public void setConstitution(int constitution) {
-		this.constitution = constitution;
-	}
-    public int gainConstitution(int constitution) {
-        this.constitution += constitution;
-        return constitution;
-    }
-
-	public int getCharisma() {
-		return charisma;
-	}
-	public void setCharisma(int charisma) {
-		this.charisma = charisma;
-	}
-    public int gainCharisma(int charisma) {
-        this.charisma += charisma;
-        return charisma;
-    }
-
-	public int getPerception() {
-		return perception;
-	}
-	public void setPerception(int perception) {
-		this.perception = perception;
-	}
-    public int gainPerception(int perception) {
-        this.perception += perception;
-        return perception;
-    }
-
-	public int getWill() {
-		return will;
-	}
-	public void setWill(int will) {
-		this.will = will;
-	}
-    public int gainWill(int will) {
-        this.will += will;
-        return will;
-    }
-
     // Constructor
     public Combatant(String name) {
         this.name = name;
     }
     
-    public String getName() {
-        return name;
-    }
+    public String getName() {return name;}
     
-	public int getInitiative() {
-		return initiative;
-	}
-	public void setInitiative(int initiative) {
-		this.initiative = initiative;
-	}
+	public int getInitiative() {return initiative;}
+	public void setInitiative(int initiative) {this.initiative = initiative;}
 	
-    public int getDodgeAttack() {
-        return dodgeAttack;
-    }
-	public void setDodgeAttack(int dodgeAttack) {
-		this.dodgeAttack = dodgeAttack;
-	}
-    
-    public int getLevel() {
-        return level;
-    }
+    public int getDodgeAttack() {return dodge;}
+	public void setDodgeAttack(int dodge) {this.dodge = dodge;}
+	
+    public int getMeleeAttack() {return attack;}
+	
+    public int getLevel() {return level;}
     public int gainLevel(int level) {
         this.level += level;
         System.out.println(" " + name + ": I've been experiencing a lot. My level is currently = " + this.level);
         return level;
     }
     
-    public int getHealth() {
-        return health;
-    }
+    public int getHealth() {return health;}
     public int increaseHealth(int additionalHealth) {
         health += additionalHealth;
         System.out.println(" " + name + ": I've been healed. My health now = " + health);
         return health;
     }
-    public int decreaseHealth(int opponentAttackPower) {
-    	health -= (opponentAttackPower - this.meleeDamageReduction);
-        return health;
+    
+    public void decreaseHealth(int meleeDamage, int meleeDamageReduction) {
+    	health -= (meleeDamage - meleeDamageReduction);
     }
     
-    public int getMeleeAttack() {
-        return meleeAttack;
+    public void restoreHealth() {
+    	health = (constitution + will + 10 + getLevel());
     }
-	public int getMeleeDamage() {
-		return meleeDamage;
-	}
-	public void setMeleeDamage(int meleeDamage) {
-		this.meleeDamage = meleeDamage;
+    
+	public int getTurn() {
+		return turn;
 	}
 
+	public void setTurn(int turn) {
+		this.turn = turn;
+	}
+	
+	public void gainTurn(int turn) {
+		this.turn += turn;
+	}
+	
+	public Weapon getWeapon() {return weapon;}
+
+	public void setWeapon(String weaponName, String weaponDescription, int weaponDamage) {
+		this.weapon = new Weapon(weaponName, weaponDescription, weaponDamage);
+		}
+
+	public Armor getArmor() {return armor;}
+
+	public void setArmor(String armorName, String armorDescription, int armorDamageReduction) {
+		this.armor = new Armor(armorName, armorDescription, armorDamageReduction);
+		}
+	
+	public int getMeleeDamage() {return meleeDamage;}
+	public void setMeleeDamage(int meleeDamage) {this.meleeDamage = meleeDamage;}
+	public int getMeleeDamageReduction() {return meleeDamageReduction;}
+	public void setMeleeDamageReduction(int meleeDamageReduction) {this.meleeDamageReduction = meleeDamageReduction;}
+	
+	public boolean isAlive() {
+		if(getHealth() > 0) {
+			setAlive(true);
+			return isAlive;
+		}
+		if(getHealth() < 0) {
+			System.out.println(getName() + " Have died...");
+			setAlive(false);
+			return isAlive;
+		}
+		return isAlive;
+	}
+	
+	public void setAlive(boolean isAlive) {
+		this.isAlive = isAlive;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -211,52 +206,8 @@ public abstract class Combatant implements CombatantSignatures {
 		return true;
 	}
 
-	public boolean isAlive() {
-		if(getHealth() > 0) {
-			setAlive(true);
-			return isAlive;
-		}
-		if(getHealth() < 0) {
-			System.out.println(getName() + " Have died...");
-			setAlive(false);
-			return isAlive;
-		}
-		return isAlive;
-	}
-	
-	public void setAlive(boolean isAlive) {
-		this.isAlive = isAlive;
-	}
 
 
-	public int getTurns() {
-		return turns;
-	}
-
-	public void setTurns(int turns) {
-		this.turns = turns;
-	}
-	
-	public int gainTurns(int turns) {
-        this.turns += turns;
-        return turns;
-	}
-
-	public int getMeleeDamageReduction() {
-		return meleeDamageReduction;
-	}
-
-	public void setMeleeDamageReduction(int meleeDamageReduction) {
-		this.meleeDamageReduction = meleeDamageReduction;
-	}
-
-	public History getHistory() {
-		return history;
-	}
-
-	public void setHistory(History history) {
-		this.history = history;
-	}
 
 
 }

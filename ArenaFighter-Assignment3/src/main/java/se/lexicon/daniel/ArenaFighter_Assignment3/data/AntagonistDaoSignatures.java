@@ -12,7 +12,6 @@ public interface AntagonistDaoSignatures {
 	Antagonist GetAntagonist();
 
 	int AntagonistMeleeAttack(CombatantSignatures attacker);
-	int AntagonistMeleeDefence(CombatantSignatures attacker);
-
-
+	int AntagonistMeleeDefence(CombatantSignatures defender);
+	int AntagonistInitiative(CombatantSignatures currentAntagonist);
 }

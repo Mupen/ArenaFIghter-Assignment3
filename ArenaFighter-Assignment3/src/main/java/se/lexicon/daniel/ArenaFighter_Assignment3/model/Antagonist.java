@@ -1,4 +1,6 @@
 package se.lexicon.daniel.ArenaFighter_Assignment3.model;
+import java.util.List;
+
 import se.lexicon.daniel.ArenaFighter_Assignment3.util.RandomGenerator;
 
 /**
@@ -17,15 +19,13 @@ public class Antagonist extends Combatant implements CombatantSignatures {
 	}
 
 	public void GetAntagonistCreation(CombatantSignatures self) {
-		self.setStrenght(RandomGenerator.getRandomDecimal());
-		self.setAgility(RandomGenerator.getRandomDecimal());
-		self.setConstitution(RandomGenerator.getRandomDecimal());
-		self.setPerception(RandomGenerator.getRandomDecimal());
-		self.setCharisma(RandomGenerator.getRandomDecimal());
-		self.setWill(RandomGenerator.getRandomDecimal());
+		self.setStrenght(RandomGenerator.getRandomDecimal(1, 10));
+		self.setAgility(RandomGenerator.getRandomDecimal(1, 10));
+		self.setConstitution(RandomGenerator.getRandomDecimal(1, 10));
+		self.setPerception(RandomGenerator.getRandomDecimal(1, 10));
+		self.setCharisma(RandomGenerator.getRandomDecimal(1, 10));
+		self.setWill(RandomGenerator.getRandomDecimal(1, 10));
 		getAttributes();
 	}
-
-
 
 }

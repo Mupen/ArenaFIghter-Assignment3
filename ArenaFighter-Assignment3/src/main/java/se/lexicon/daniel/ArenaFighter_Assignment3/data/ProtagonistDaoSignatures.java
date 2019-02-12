@@ -10,9 +10,7 @@ public interface ProtagonistDaoSignatures {
 	void ProtagonistDied();
 	Protagonist GetProtagonist();
 
-	int ProtagonistMeleeDefence(CombatantSignatures defender);
 	int ProtagonistMeleeAttack(CombatantSignatures attacker);
-	
-
-
+	int ProtagonistMeleeDefence(CombatantSignatures defender);
+	int ProtagonistInitiative(CombatantSignatures currentProtagonist);
 }

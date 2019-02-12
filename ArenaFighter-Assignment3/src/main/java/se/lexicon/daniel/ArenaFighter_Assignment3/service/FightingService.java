@@ -5,7 +5,6 @@ import se.lexicon.daniel.ArenaFighter_Assignment3.data.AntagonistDaoSignatures;
 import se.lexicon.daniel.ArenaFighter_Assignment3.data.ProtagonistDao;
 import se.lexicon.daniel.ArenaFighter_Assignment3.data.ProtagonistDaoSignatures;
 import se.lexicon.daniel.ArenaFighter_Assignment3.model.Antagonist;
-import se.lexicon.daniel.ArenaFighter_Assignment3.model.Combatant;
 import se.lexicon.daniel.ArenaFighter_Assignment3.model.CombatantSignatures;
 import se.lexicon.daniel.ArenaFighter_Assignment3.model.Protagonist;
 import se.lexicon.daniel.ArenaFighter_Assignment3.util.RandomGenerator;
@@ -34,28 +33,9 @@ public class FightingService implements FightingServiceSignatures{
 	}
 	
 	@Override
-	public CombatantSignatures CombatantInitiative() {
-		currentProtagonist = protagonistDaoSignaturesObject.GetProtagonist();
-		currentAntagonist = antagonistDaoSignaturesObject.GetAntagonist();
-		
-		int currentProtagonistInitiative = currentProtagonist.getInitiative() + RandomGenerator.getRandomDecimal();
-		int currentAntagonistInitiative = currentAntagonist.getInitiative() + RandomGenerator.getRandomDecimal();
-		CombatantSignatures InitiativeWinner = null;
-		
-		if (currentProtagonistInitiative > currentAntagonistInitiative) {
-			MeleeAttack(currentProtagonist, currentAntagonist);
-			InitiativeWinner = currentProtagonist;
-			currentProtagonist.gainTurns(1);
-		}
-		else if (currentProtagonistInitiative < currentAntagonistInitiative) {
-			MeleeAttack(currentAntagonist, currentProtagonist);
-			InitiativeWinner = currentAntagonist;
-			currentAntagonist.gainTurns(1);
-		}
-		else if (currentProtagonistInitiative == currentAntagonistInitiative) {
-			fightingServiceInstance.CombatantInitiative();
-		}
-		return InitiativeWinner;
+	public void CombatantDied(CombatantSignatures currentProtagonist,CombatantSignatures currentAntagonist) {
+		if(!currentProtagonist.isAlive()) {protagonistDaoSignaturesObject.ProtagonistDied();}
+		if(!currentAntagonist.isAlive()) {antagonistDaoSignaturesObject.AntagonistDied();}
 	}
 	
 	@Override
@@ -69,8 +49,36 @@ public class FightingService implements FightingServiceSignatures{
 	}
 	
 	@Override
-	public void MeleeAttack(CombatantSignatures attacker, CombatantSignatures defender) {
-
+	public CombatantSignatures CombatantInitiative() {
+		currentProtagonist = protagonistDaoSignaturesObject.GetProtagonist();
+		currentAntagonist = antagonistDaoSignaturesObject.GetAntagonist();
+		
+		int currentProtagonistInitiative = protagonistDaoSignaturesObject.ProtagonistInitiative(currentProtagonist);
+		int currentAntagonistInitiative = antagonistDaoSignaturesObject.AntagonistInitiative(currentAntagonist);
+		
+		CombatantSignatures InitiativeWinner = null;
+		
+		if (currentProtagonistInitiative > currentAntagonistInitiative) {
+			MeleeAttack(currentProtagonist, currentAntagonist, 1);
+			InitiativeWinner = currentProtagonist;
+			currentProtagonist.gainTurn(1);
+		}
+		
+		else if (currentProtagonistInitiative < currentAntagonistInitiative) {
+			MeleeAttack(currentAntagonist, currentProtagonist, 1);
+			InitiativeWinner = currentAntagonist;
+			currentAntagonist.gainTurn(1);
+		}
+		
+		else if (currentProtagonistInitiative == currentAntagonistInitiative) {
+			fightingServiceInstance.CombatantInitiative();
+		}
+		
+		return InitiativeWinner;
+	}
+	
+	@Override
+	public void MeleeAttack(CombatantSignatures attacker, CombatantSignatures defender, int round) {
 		int attackValue = 0, defenceValue = 0;
 		
 		if(attacker.equals(protagonistDaoSignaturesObject.GetProtagonist())) {
@@ -83,41 +91,73 @@ public class FightingService implements FightingServiceSignatures{
 			defenceValue = protagonistDaoSignaturesObject.ProtagonistMeleeDefence(defender);
 		}
 		
+		
+		System.out.println("");
+		System.out.println("|------" + attacker.getName().replaceAll("[a-zA-Z\\s]", "-") + "-" + defender.getName().replaceAll("[a-zA-Z\\s]", "-") + "-----|");
+		System.out.println("| " + attacker.getName() + " Attacks! " + defender.getName() + " |");
+		System.out.println("|------" + attacker.getName().replaceAll("[a-zA-Z\\s]", "-") + "-" + defender.getName().replaceAll("[a-zA-Z\\s]", "-") + "-----|");
+		System.out.println("");
+		
 		if (attackValue >= defenceValue) {
-			System.out.println("");
-			System.out.println("|------" + attacker.getName().replaceAll("[a-zA-Z\\s]", "-") + "-" + defender.getName().replaceAll("[a-zA-Z\\s]", "-") + "-----|");
-			System.out.println("| " + attacker.getName() + " Attacks! " + defender.getName() + " |");
-			System.out.println("|------" + attacker.getName().replaceAll("[a-zA-Z\\s]", "-") + "-" + defender.getName().replaceAll("[a-zA-Z\\s]", "-") + "-----|");
-			System.out.println("");
-			
 			System.out.println("[" + attacker.getName() + "]: attack with his weapon and ["+ attackValue +"] Successfully bypassed his opponents defense of " + "["+ defenceValue + "]");
-			System.out.println("[" + attacker.getName() + "]: deal ["+ attacker.getMeleeDamage() +"] in damage ");
+			System.out.println("[" + attacker.getName() + "]: deal ["+ attacker.getMeleeDamage() +"] in damage");
 			
-			defender.decreaseHealth(attacker.getMeleeDamage());
-	    	if (defender.getArmor() > 0) {
-	    		System.out.println("[" + defender.getName() + "]: Armor and constitution protecteded him for: [" + defender.getMeleeDamageReduction() + "] and now have only: [" + defender.getHealth() + "] health left");}
+			defender.decreaseHealth(attacker.getMeleeDamage(), defender.getMeleeDamageReduction());
+			
+	    	if (defender.getMeleeDamageReduction() > 0) {
+	    		System.out.println("[" + defender.getName() + "]: Armor and constitution protecteded him for: [" + defender.getMeleeDamageReduction() + "] and now have only: [" + defender.getHealth() + "] health left\n");
+	    		}
 	    	else {
-	    		System.out.println("[" + defender.getName() + "]: Constitution that protecteded him for: [" + defender.getMeleeDamageReduction() + "] and now have only: [" + defender.getHealth() + "] health left");}
-		
-			attacker.addHistory("Turn" + attacker.getTurns()
-					+ "\n[" + attacker.getName() + "]: Attacks! [" + defender.getName() + "]"
-					+ "\n[" + attacker.getName() + "]: attack with his weapon and ["+ attackValue +"] Successfully bypassed his opponents defense of " + "["+ defenceValue + "]"
-					+ "\n[" + attacker.getName() + "]: deal [" + attacker.getMeleeDamage() + "] in damage "
-					+ "\n[" + defender.getName() + "]: was protected for a total of [" + defender.getMeleeDamageReduction() + "]");
+	    		System.out.println("[" + defender.getName() + "]: Constitution that protecteded him for: [" + (defender.getConstitution()/2) + "] and now have only: [" + defender.getHealth() + "] health left\n");
+	    		}
 		}
 		
-		else if (attackValue < defenceValue) {
-			System.out.println("[" + defender.getName() + "]: ["+ defenceValue +"] Successfully blocked his opponents attack of " + "["+ attackValue + "]");
-			
-			attacker.addHistory("Turn" + attacker.getTurns()
-			+ "\n[" + attacker.getName() + "]: Attacks! [" + defender.getName() + "]"
-			+ "\n[" + defender.getName() + "]: ["+ defenceValue +"] Successfully blocked his opponents attack of " + "["+ attackValue + "]");
+		else {
+			System.out.println("[" + attacker.getName() + "]: attack with his weapon and ["+ attackValue +"] failed in bypassing his opponents defense of " + "["+ defenceValue + "]\n");
 		}
+		
+		currentAntagonist.setFightingLedger(round, currentAntagonist.getName(), currentAntagonist.getMeleeAttack(), currentProtagonist.getName(), currentProtagonist.getDodgeAttack(), currentAntagonist.getMeleeDamage(), currentProtagonist.getMeleeDamageReduction(), currentProtagonist.getHealth());
+		currentProtagonist.setFightingLedger(round, currentProtagonist.getName(), currentProtagonist.getMeleeAttack(), currentAntagonist.getName(), currentAntagonist.getDodgeAttack(), currentProtagonist.getMeleeDamage(), currentAntagonist.getMeleeDamageReduction(), currentAntagonist.getHealth());
+		
+		currentAntagonist.addToFightingLedgerStorage(currentAntagonist.getFightingLedger());
+		currentProtagonist.addToFightingLedgerStorage(currentProtagonist.getFightingLedger());
+	}
+	
+	@Override
+	public CombatantSignatures WinnerIs(CombatantSignatures currentProtagonist, CombatantSignatures currentAntagonist) {
+		if(currentProtagonist.getHealth() > currentAntagonist.getHealth()) {return currentProtagonist;}
+		else return currentAntagonist;
+	}
+	
+	
+	@Override
+	public void levelUp(CombatantSignatures winner) {
+		System.out.println("");
+		winner.gainLevel(1);
+		System.out.println("");
+		
+		currentProtagonist.restoreHealth();
+		currentAntagonist.restoreHealth();
+		
+		int levelUpSelection = RandomGenerator.getRandomDecimal(1, 6);
+        switch (levelUpSelection) {
+        case 1: winner.gainStrenght(2); 
+        System.out.println("[" + winner.getName() + "] gaind 2 Strenght"); break;
+        case 2: winner.gainAgility(2);
+        System.out.println("[" + winner.getName() + "] gaind 22 Agility"); break;
+        case 3: winner.gainConstitution(2);
+        System.out.println("[" + winner.getName() + "] gaind 2 Constitution"); break;
+        case 4: winner.gainPerception(2);
+        System.out.println("[" + winner.getName() + "] gaind 2 Perception"); break;
+        case 5: winner.gainCharisma(2);
+        System.out.println("[" + winner.getName() + "] gaind 2 Charisma"); break;
+        case 6: winner.gainWill(2); 
+        System.out.println("[" + winner.getName() + "] gaind 2 Will"); break;
+        default: System.out.println("Something went wrong this should not be possible"); break;
+        }
+        System.out.println("");
+        
 	}
 
-	@Override
-	public void levelUppifAlive(Protagonist currentProtagonist, Antagonist currentAntagonist) {
-		// TODO Auto-generated method stub
-		
-	}
+
 }

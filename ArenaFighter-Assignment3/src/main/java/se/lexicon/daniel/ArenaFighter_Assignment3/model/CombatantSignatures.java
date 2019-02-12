@@ -9,28 +9,18 @@ import java.util.List;
 public interface CombatantSignatures {
 	
     String getName();
-	
+
     // Health related signatures
+    boolean isAlive();
     int getHealth();
     int increaseHealth(int additionalHealth);
-    int decreaseHealth(int opponentAttackPower);
-    
+	void decreaseHealth(int meleeDamage, int meleeDamageReduction);
+	
     // Gain level
     int gainLevel(int level);
     int getMeleeAttack();
-    int getMeleeDamage();
-    int getMeleeDamageReduction();
     int getDodgeAttack();
     int getInitiative();
-	
-    // set armor and weapon grade
-    int setArmor(int grade);
-    int getArmor();
-	int setWeapon(int grade);
-    int getWeapon();
-    
-    // History 
-    List setHistory(String string);
 	
 	// Get attributes
     int getStrenght();
@@ -55,9 +45,16 @@ public interface CombatantSignatures {
     void setCharisma(int i);
     void setPerception(int i);
     void setWill(int i);
+    
+//    void gainTurn();
+    Weapon getWeapon();
+    Armor getArmor();
 
-	void addHistory(String string);
+    int getMeleeDamage();
+    int getMeleeDamageReduction();
+	void setMeleeDamage(int meleeDamage);
+	void setMeleeDamageReduction(int meleeDamageReduction);
 
-	int getTurns();
 
+    
 }

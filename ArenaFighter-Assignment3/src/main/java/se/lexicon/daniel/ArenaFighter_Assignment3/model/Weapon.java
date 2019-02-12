@@ -6,11 +6,13 @@ public class Weapon {
 	private String weaponId;
 	private String weaponName;
 	private String weaponDescription;
-	private String weaponDamage;
+	private int weaponDamage;
 	
-	public Weapon(String weaponName) {
-		this.weaponName = weaponName;
+	public Weapon(String weaponName, String weaponDescription, int weaponDamage) {
 		this.weaponId = UUID.randomUUID().toString();
+		this.weaponName = weaponName;
+		this.weaponDescription = weaponDescription;
+		this.weaponDamage = weaponDamage;
 	}
 	
 	public String getWeaponName() {
@@ -33,16 +35,17 @@ public class Weapon {
 		this.weaponDescription = weaponDescription;
 	}
 
-	public String getWeaponDamage() {
+	public int getWeaponDamage() {
 		return weaponDamage;
 	}
 
-	public void setWeaponDamage(String weaponDamage) {
+	public void setWeaponDamage(int weaponDamage) {
 		this.weaponDamage = weaponDamage;
 	}
 
 	@Override
 	public String toString() {
-		return new StringBuilder(getWeaponName()).toString();
+		return "Weapon [weaponId=" + weaponId + ", weaponName=" + weaponName + ", weaponDescription="
+				+ weaponDescription + ", weaponDamage=" + weaponDamage + "]";
 	}
 }

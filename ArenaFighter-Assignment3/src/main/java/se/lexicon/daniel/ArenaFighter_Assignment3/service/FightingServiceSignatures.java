@@ -11,8 +11,11 @@ public interface FightingServiceSignatures {
 	
 	Protagonist GetProtagonistObject();
 	Antagonist GetAntagonistObject();
-	void MeleeAttack(CombatantSignatures attacker, CombatantSignatures defender);
-	void levelUppifAlive(Protagonist currentProtagonist, Antagonist currentAntagonist);
+	void MeleeAttack(CombatantSignatures attacker, CombatantSignatures defender, int round);
+	void CombatantDied(CombatantSignatures currentProtagonist, CombatantSignatures currentAntagonist);
+	CombatantSignatures WinnerIs(CombatantSignatures currentProtagonist, CombatantSignatures currentAntagonist);
+	void levelUp(CombatantSignatures winner);
+
 	
 
 
