@@ -28,4 +28,5 @@ public class Antagonist extends Combatant implements CombatantSignatures {
 		getAttributes();
 	}
 
+
 }

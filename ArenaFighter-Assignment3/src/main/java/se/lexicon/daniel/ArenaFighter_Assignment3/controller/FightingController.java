@@ -1,5 +1,8 @@
 package se.lexicon.daniel.ArenaFighter_Assignment3.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import se.lexicon.daniel.ArenaFighter_Assignment3.data.AntagonistDao;
 import se.lexicon.daniel.ArenaFighter_Assignment3.data.AntagonistDaoSignatures;
 import se.lexicon.daniel.ArenaFighter_Assignment3.data.ProtagonistDao;
@@ -18,6 +21,7 @@ public class FightingController {
 	private Protagonist currentProtagonist;
 	private Antagonist currentAntagonist;
 	private CombatantSignatures lastTurnOrder;
+	private int round;
 	private boolean running;
 
 	/**
@@ -33,9 +37,6 @@ public class FightingController {
 		fightingServiceInstance = FightingService.getFightingServiceInstance();
 		protagonistDaoInstance = ProtagonistDao.getProtagonistDaoInstance();
 		antagonistDaoInstance = AntagonistDao.getAntagonistDaoInstance();
-		this.currentProtagonist = protagonistDaoInstance.ProtagonistCreation();
-		this.currentAntagonist = antagonistDaoInstance.AntagonistCreation();
-		this.lastTurnOrder = fightingServiceInstance.CombatantInitiative();
 		running = true;
 	}
 
@@ -48,9 +49,13 @@ public class FightingController {
 	}
 
 	public void run() {
-		int round = 0;
+		if(currentProtagonist == null) {currentProtagonist = protagonistDaoInstance.ProtagonistCreation();}
+		if(currentAntagonist == null) {currentAntagonist = antagonistDaoInstance.AntagonistCreation();}
+		
+		lastTurnOrder = fightingServiceInstance.CombatantInitiative();
 		
 		currentProtagonist = fightingServiceInstance.GetProtagonistObject();
+		
 		currentAntagonist = fightingServiceInstance.GetAntagonistObject();
 		
 		round ++;
@@ -78,23 +83,33 @@ public class FightingController {
 		System.out.println("|----------" + fightingServiceInstance.WinnerIs(currentProtagonist, currentAntagonist).getName().replaceAll("[a-zA-Z\\s]", "-") + "-" + "-|");
 		System.out.println("");
 		
-		if(currentProtagonist.isAlive() && !currentAntagonist.isAlive()) {
-			String armorSelection = KeyboardInput.getString("What action do you want to take?" + "\n [Continue]: " + "\n [Ledger]: " + "\n [Quit]: ");
-			switch (armorSelection.toLowerCase()) {
+		actionSelection();
+
+    	fightingServiceInstance.CombatantDied(currentProtagonist, currentAntagonist);
+	}
+	
+	public void actionSelection() {
+		int stopActionSelection = 0;
+		while(stopActionSelection  == 0) {
+			String actionSelection = KeyboardInput.getString("What action do you want to take?" + "\n [Continue]: " + "\n [Ledger]: " + "\n [Quit]: ");
+			switch (actionSelection.toLowerCase()) {
 	            case "continue":
 	            	fightingServiceInstance.levelUp(fightingServiceInstance.WinnerIs(currentProtagonist, currentAntagonist));
+	            	if(currentProtagonist.isAlive() && !currentAntagonist.isAlive()) {currentAntagonist = null;}
+	            	else if(!currentProtagonist.isAlive() && currentAntagonist.isAlive()) {currentProtagonist = null;}
+	            	stopActionSelection = 1;
+	            	round = 0;
 	            	break;
-	            case "ledger": break;
-	            case "quit": break;
-	            default: break;
+	            case "ledger":
+	            	
+	            	currentProtagonist.getFightingLedgerStorage().forEach(n -> System.out.print(n.stringBuilder()));
+	        		break;
+	            case "quit":
+	            	stopActionSelection = 1;
+	            	isStoping(); 
+	            	break;
+	            default: actionSelection(); break;
 	        }
 		}
-		
-		fightingServiceInstance.CombatantDied(currentProtagonist, currentAntagonist);
-		
-		System.out.println(currentAntagonist.getFightingLedger());
-		System.out.println(currentProtagonist.getFightingLedger());
-		
-		isStoping();
 	}
 }

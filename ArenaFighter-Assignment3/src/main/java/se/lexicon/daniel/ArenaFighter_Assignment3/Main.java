@@ -11,6 +11,5 @@ public class Main {
     	while(ui.isRunning()) {
     		ui.run();
     	}
-    	
     }
 }

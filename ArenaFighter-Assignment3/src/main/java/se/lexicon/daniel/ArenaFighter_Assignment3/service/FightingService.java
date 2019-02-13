@@ -34,8 +34,8 @@ public class FightingService implements FightingServiceSignatures{
 	
 	@Override
 	public void CombatantDied(CombatantSignatures currentProtagonist,CombatantSignatures currentAntagonist) {
-		if(!currentProtagonist.isAlive()) {protagonistDaoSignaturesObject.ProtagonistDied();}
-		if(!currentAntagonist.isAlive()) {antagonistDaoSignaturesObject.AntagonistDied();}
+		if(currentProtagonist == null) {protagonistDaoSignaturesObject.ProtagonistDied();}
+		if(currentAntagonist == null) {antagonistDaoSignaturesObject.AntagonistDied();}
 	}
 	
 	@Override
@@ -98,13 +98,13 @@ public class FightingService implements FightingServiceSignatures{
 		System.out.println("|------" + attacker.getName().replaceAll("[a-zA-Z\\s]", "-") + "-" + defender.getName().replaceAll("[a-zA-Z\\s]", "-") + "-----|");
 		System.out.println("");
 		
-		if (attackValue >= defenceValue) {
+		if(attackValue >= defenceValue) {
 			System.out.println("[" + attacker.getName() + "]: attack with his weapon and ["+ attackValue +"] Successfully bypassed his opponents defense of " + "["+ defenceValue + "]");
 			System.out.println("[" + attacker.getName() + "]: deal ["+ attacker.getMeleeDamage() +"] in damage");
 			
 			defender.decreaseHealth(attacker.getMeleeDamage(), defender.getMeleeDamageReduction());
 			
-	    	if (defender.getMeleeDamageReduction() > 0) {
+	    	if(defender.getMeleeDamageReduction() > 0) {
 	    		System.out.println("[" + defender.getName() + "]: Armor and constitution protecteded him for: [" + defender.getMeleeDamageReduction() + "] and now have only: [" + defender.getHealth() + "] health left\n");
 	    		}
 	    	else {
@@ -116,8 +116,8 @@ public class FightingService implements FightingServiceSignatures{
 			System.out.println("[" + attacker.getName() + "]: attack with his weapon and ["+ attackValue +"] failed in bypassing his opponents defense of " + "["+ defenceValue + "]\n");
 		}
 		
-		currentAntagonist.setFightingLedger(round, currentAntagonist.getName(), currentAntagonist.getMeleeAttack(), currentProtagonist.getName(), currentProtagonist.getDodgeAttack(), currentAntagonist.getMeleeDamage(), currentProtagonist.getMeleeDamageReduction(), currentProtagonist.getHealth());
-		currentProtagonist.setFightingLedger(round, currentProtagonist.getName(), currentProtagonist.getMeleeAttack(), currentAntagonist.getName(), currentAntagonist.getDodgeAttack(), currentProtagonist.getMeleeDamage(), currentAntagonist.getMeleeDamageReduction(), currentAntagonist.getHealth());
+		currentAntagonist.setFightingLedger(round, currentAntagonist.getName(), currentAntagonist.getMeleeAttack(), currentProtagonist.getName(), currentProtagonist.getDodgeAttack(), currentAntagonist.getMeleeDamage(), currentProtagonist.getMeleeDamageReduction(), currentAntagonist.getHealth());
+		currentProtagonist.setFightingLedger(round, currentProtagonist.getName(), currentProtagonist.getMeleeAttack(), currentAntagonist.getName(), currentAntagonist.getDodgeAttack(), currentProtagonist.getMeleeDamage(), currentAntagonist.getMeleeDamageReduction(), currentProtagonist.getHealth());
 		
 		currentAntagonist.addToFightingLedgerStorage(currentAntagonist.getFightingLedger());
 		currentProtagonist.addToFightingLedgerStorage(currentProtagonist.getFightingLedger());
@@ -135,29 +135,23 @@ public class FightingService implements FightingServiceSignatures{
 		System.out.println("");
 		winner.gainLevel(1);
 		System.out.println("");
-		
-		currentProtagonist.restoreHealth();
-		currentAntagonist.restoreHealth();
-		
+		winner.restoreHealth();
+		System.out.println("");
 		int levelUpSelection = RandomGenerator.getRandomDecimal(1, 6);
         switch (levelUpSelection) {
-        case 1: winner.gainStrenght(2); 
-        System.out.println("[" + winner.getName() + "] gaind 2 Strenght"); break;
-        case 2: winner.gainAgility(2);
-        System.out.println("[" + winner.getName() + "] gaind 22 Agility"); break;
-        case 3: winner.gainConstitution(2);
-        System.out.println("[" + winner.getName() + "] gaind 2 Constitution"); break;
-        case 4: winner.gainPerception(2);
-        System.out.println("[" + winner.getName() + "] gaind 2 Perception"); break;
-        case 5: winner.gainCharisma(2);
-        System.out.println("[" + winner.getName() + "] gaind 2 Charisma"); break;
-        case 6: winner.gainWill(2); 
-        System.out.println("[" + winner.getName() + "] gaind 2 Will"); break;
-        default: System.out.println("Something went wrong this should not be possible"); break;
+	        case 1: winner.gainStrenght(2); 
+	        System.out.println("[" + winner.getName() + "] gaind 2 Strenght"); break;
+	        case 2: winner.gainAgility(2);
+	        System.out.println("[" + winner.getName() + "] gaind 2 Agility"); break;
+	        case 3: winner.gainConstitution(2);
+	        System.out.println("[" + winner.getName() + "] gaind 2 Constitution"); break;
+	        case 4: winner.gainPerception(2);
+	        System.out.println("[" + winner.getName() + "] gaind 2 Perception"); break;
+	        case 5: winner.gainCharisma(2);
+	        System.out.println("[" + winner.getName() + "] gaind 2 Charisma"); break;
+	        case 6: winner.gainWill(2); 
+	        System.out.println("[" + winner.getName() + "] gaind 2 Will"); break;
+	        default: System.out.println("Something went wrong this should not be possible"); break;
         }
-        System.out.println("");
-        
 	}
-
-
 }

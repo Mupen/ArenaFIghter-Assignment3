@@ -3,6 +3,7 @@ package se.lexicon.daniel.ArenaFighter_Assignment3.model;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
  * Created by Daniel Henriksen.
  * @param <FightingLedger>
@@ -31,8 +32,11 @@ public abstract class Combatant implements CombatantSignatures {
     
     
 	public List<FightingLedger> getFightingLedgerStorage() {return fightingLedgerStorage;}
+	
 	public void addToFightingLedgerStorage(FightingLedger fightingLedger) {fightingLedgerStorage.add(fightingLedger);}
+	
 	public FightingLedger getFightingLedger() {return fightingLedger;}
+	
 	public void setFightingLedger(int round, String attacker, int attackValue, String dodger, int dodgeValue, int damage, int damageReductionn, int healthLeft) {
 		this.fightingLedger = new FightingLedger(round, attacker, attackValue, dodger, dodgeValue, damage, damageReductionn, healthLeft);
 	}
@@ -45,8 +49,6 @@ public abstract class Combatant implements CombatantSignatures {
     private int dodge = (int) Math.ceil((agility + perception)/2);
     private int meleeDamage;
     private int meleeDamageReduction;
-    
-
     
     public void getAttributes() {
     	System.out.println("------------" + getName() + " Character Attributes ------------" +
@@ -155,7 +157,6 @@ public abstract class Combatant implements CombatantSignatures {
 			return isAlive;
 		}
 		if(getHealth() < 0) {
-			System.out.println(getName() + " Have died...");
 			setAlive(false);
 			return isAlive;
 		}

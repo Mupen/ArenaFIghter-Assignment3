@@ -15,6 +15,7 @@ public interface CombatantSignatures {
     int getHealth();
     int increaseHealth(int additionalHealth);
 	void decreaseHealth(int meleeDamage, int meleeDamageReduction);
+	void restoreHealth();
 	
     // Gain level
     int gainLevel(int level);
@@ -46,7 +47,7 @@ public interface CombatantSignatures {
     void setPerception(int i);
     void setWill(int i);
     
-//    void gainTurn();
+    // void gainTurn();
     Weapon getWeapon();
     Armor getArmor();
 
@@ -54,7 +55,4 @@ public interface CombatantSignatures {
     int getMeleeDamageReduction();
 	void setMeleeDamage(int meleeDamage);
 	void setMeleeDamageReduction(int meleeDamageReduction);
-
-
-    
 }

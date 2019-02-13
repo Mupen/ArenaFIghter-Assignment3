@@ -27,13 +27,37 @@ public class FightingLedger  {
 	}
 
 
-	@Override
-	public String toString() {
-		return "FightingLedger [FightingLedgerId=" + FightingLedgerId + ", FightingLedgerRound=" + FightingLedgerRound
-				+ ", FightingLedgerAttacker=" + FightingLedgerAttacker + ", FightingLedgerAttackValue="
-				+ FightingLedgerAttackValue + ", FightingLedgerDodger=" + FightingLedgerDodger
-				+ ", FightingLedgerDodgeValue=" + FightingLedgerDodgeValue + ", FightingLedgerDamage="
-				+ FightingLedgerDamage + ", FightingLedgerDamageReductionn=" + FightingLedgerDamageReductionn
-				+ ", FightingLedgerHealthLeft=" + FightingLedgerHealthLeft + "]";
+	public String stringBuilder() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("\n *** FightingLedger *** \n");
+		
+		sb.append(" FightingLedgerId = ");
+		sb.append(FightingLedgerId + "\n");
+		
+		sb.append(" FightingLedgerRound = ");
+		sb.append(FightingLedgerRound + "\n");
+		
+		sb.append(" FightingLedgerAttacker = ");
+		sb.append(FightingLedgerAttacker + "\n");
+		
+		sb.append(" FightingLedgerAttackValue = ");
+		sb.append(FightingLedgerAttackValue + "\n");
+		
+		sb.append(" FightingLedgerDodger = ");
+		sb.append(FightingLedgerDodger + "\n");
+		
+		sb.append(" FightingLedgerDodgeValue = ");
+		sb.append(FightingLedgerDodgeValue + "\n");
+		
+		sb.append(" FightingLedgerDamage = ");
+		sb.append(FightingLedgerDamage + "\n");
+		
+		sb.append(" FightingLedgerDamageReductionn = ");
+		sb.append(FightingLedgerDamageReductionn + "\n");
+		
+		sb.append(" FightingLedgerHealthLeft = ");
+		sb.append(FightingLedgerHealthLeft + "\n");
+		
+		return sb.toString(); 
 	}
 }
