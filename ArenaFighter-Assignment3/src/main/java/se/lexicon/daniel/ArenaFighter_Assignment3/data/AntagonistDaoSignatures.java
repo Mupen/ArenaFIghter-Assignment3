@@ -6,12 +6,13 @@ import se.lexicon.daniel.ArenaFighter_Assignment3.model.CombatantSignatures;
 
 public interface AntagonistDaoSignatures {
 
-	Antagonist AntagonistCreation();
-
+	Antagonist AntagonistCreation(String randomName, int weaponSelection, int armorSelection);
 	void AntagonistDied();
 	Antagonist GetAntagonist();
 
 	int AntagonistMeleeAttack(CombatantSignatures attacker);
 	int AntagonistMeleeDefence(CombatantSignatures defender);
 	int AntagonistInitiative(CombatantSignatures currentAntagonist);
+
+
 }

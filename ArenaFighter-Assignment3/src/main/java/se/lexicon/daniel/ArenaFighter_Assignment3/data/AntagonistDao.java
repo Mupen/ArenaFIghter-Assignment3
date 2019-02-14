@@ -19,31 +19,13 @@ public class AntagonistDao implements AntagonistDaoSignatures {
 	private AntagonistDao() {antagonistStorage = new ArrayList<>();}
 	
 	@Override	
-	public Antagonist AntagonistCreation() {
+	public Antagonist AntagonistCreation(String randomName, int weaponSelection, int armorSelection) {
 		// Declare and Construct an instance of the Antagonist called currentAntagonist
-		String randomName = RandomGenerator.getRandomName(); // placeholder
-		
 		Antagonist currentAntagonist = new Antagonist(randomName);
 		    
 		// Call Antagonist Character Creation Method in Antagonist class
 	    currentAntagonist.GetAntagonistCreation(currentAntagonist);
 	    
-	    int weaponSelection = RandomGenerator.getRandomDecimal(1, 3);
-        switch (weaponSelection) {
-            case 1: currentAntagonist.setWeapon("Gladius", "The Gladius is the perfected form of the earliest attempts of making a standard military sidearm. It had a broad blade that allowed it to apply some weight behind a chop, but was not a particularly good slashing weapon - though unlike its predecessors, it was specifically designed for thrusting, and was good at getting through contemporary armor. The word Gladius simply means sword, which gives you an idea of how long the sword was in use - here's a hint, we're talking several thousand years.", 2); break;
-            case 2: currentAntagonist.setWeapon("Mace", "The first weapon used by mankind was probably a stick or a boulder. Someone eventually thought to combine the merits of the two, and came up with the idea for the mace. It is really just a fabricated club, and while they were later perfected to be effective against armor (such as the case with the flanged mace), they were always dramatically inferior weapons (when compared to alternatives) - but extremely simple to use, requiring practically no training at all, which is why they remained popular and are in a sense, still in use! We've just altered the design and call them batons now.", 4); break;
-            case 3: currentAntagonist.setWeapon("Long-axe", "The first known iterations of the Long-Axe were known as Dane-Axes, as they were used by viking raiders from Scandinavia, and during that time, that mostly meant Denmark, because the rest of Scandinavia was still very rural. The axe design was later redesigned again and again until it reached the final form of the pollaxe, which was a far-cry from the original concept, featuring a warhammer head on the opposite side. The Pollaxe was the finally form, as it was designed with metal covering most of the shaft, allowing the weapon to effectively parry, be used partially as a spear, an axe and sometimes also a hammer - hence the all-around excellent stats. It was an extremely popular late-medieval weapon among footknights.  ", 6); break;
-            default: currentAntagonist.setWeapon("Fists", "Fists of the north star", 1); break;
-        }
-        
-		int armorSelection = RandomGenerator.getRandomDecimal(1, 3);
-        switch (armorSelection) {
-            case 1: currentAntagonist.setArmor("Gambeson", " is a padded defensive jacket, worn as armour separately, or combined with mail or plate armour it becomes very good armor with mail or plate but without it become the most practical armor for commoners that can't afford metal. It also doubled as a winter coat for wearers and is good agiasnt rain.", 2); break;
-            case 2: currentAntagonist.setArmor("Chainmail", "Chainmail, contrary to popular belief, did not go out of fashion just because plate armor was invented and was often worn as a supplement to plate armor because it was generally much more tried and true than plate armor, which was a constantly evolving science. Chainmail is extremely good armor for avoiding cuts and stabs, but unfortunately the tips of piercing weapons tend to stick through the chain-links, and even a cut that doesn’t penetrate essentially still transfers most kinetic energy to the wearer,", 4); break;
-            case 3: currentAntagonist.setArmor("Brigandine", "The brigandine is the poor man's plate armor, or the rich man's hauberk if you will - it is essentially a gambeson with metal plates riveted inside the lining. While the torso component of brigandine can be made to hang down and cover the upper legs like a skirt, it cannot reasonably be used to cover the arms or lower legs - but splintmail often used to make up the difference. Brigandine is just as flexible as chainmail on the torso, but would restrict arm- and leg movement completely if it was used normally on limbs.", 6); break;
-            default: currentAntagonist.setArmor("Naked", "Glorious abs!", 0); break;
-        }
-        
         currentAntagonist.setMeleeDamage(currentAntagonist.getWeapon().getWeaponDamage() + currentAntagonist.getStrenght());
         currentAntagonist.setMeleeDamageReduction((currentAntagonist.getArmor().getArmorDamageReduction() + currentAntagonist.getConstitution())/2);
 	    
