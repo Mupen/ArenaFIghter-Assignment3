@@ -116,8 +116,8 @@ public class FightingService implements FightingServiceSignatures{
 			System.out.println("[" + attacker.getName() + "]: attack with his weapon and ["+ attackValue +"] failed in bypassing his opponents defense of " + "["+ defenceValue + "]\n");
 		}
 		
-		currentAntagonist.setFightingLedger(round, currentAntagonist.getName(), currentAntagonist.getMeleeAttack(), currentProtagonist.getName(), currentProtagonist.getDodgeAttack(), currentAntagonist.getMeleeDamage(), currentProtagonist.getMeleeDamageReduction(), currentAntagonist.getHealth());
-		currentProtagonist.setFightingLedger(round, currentProtagonist.getName(), currentProtagonist.getMeleeAttack(), currentAntagonist.getName(), currentAntagonist.getDodgeAttack(), currentProtagonist.getMeleeDamage(), currentAntagonist.getMeleeDamageReduction(), currentProtagonist.getHealth());
+		currentAntagonist.setFightingLedger(round, currentAntagonist.getName(), attackValue, currentProtagonist.getName(), defenceValue, currentAntagonist.getMeleeDamage(), currentProtagonist.getMeleeDamageReduction(), currentAntagonist.getHealth());
+		currentProtagonist.setFightingLedger(round, currentProtagonist.getName(), attackValue, currentAntagonist.getName(), defenceValue, currentProtagonist.getMeleeDamage(), currentAntagonist.getMeleeDamageReduction(), currentProtagonist.getHealth());
 		
 		currentAntagonist.addToFightingLedgerStorage(currentAntagonist.getFightingLedger());
 		currentProtagonist.addToFightingLedgerStorage(currentProtagonist.getFightingLedger());
