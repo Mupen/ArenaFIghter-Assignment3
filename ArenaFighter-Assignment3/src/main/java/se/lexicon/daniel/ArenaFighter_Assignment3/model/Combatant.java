@@ -118,9 +118,7 @@ public abstract class Combatant implements CombatantSignatures {
     	health -= (meleeDamage - meleeDamageReduction);
     }
     
-    public void restoreHealth() {
-    	health = (constitution + will + 10 + getLevel());
-    }
+
     
 	public int getTurn() {
 		return turn;
@@ -156,12 +154,21 @@ public abstract class Combatant implements CombatantSignatures {
 			setAlive(true);
 			return isAlive;
 		}
+		if(getHealth() > (constitution + will + 10 + getLevel())) {
+			setAlive(true);
+			restoreHealth();
+			return isAlive;
+		}
 		if(getHealth() < 0) {
 			setAlive(false);
 			return isAlive;
 		}
 		return isAlive;
 	}
+	
+    public void restoreHealth() {
+    	health = (constitution + will + 10 + getLevel());
+    }
 	
 	public void setAlive(boolean isAlive) {
 		this.isAlive = isAlive;
