@@ -21,7 +21,7 @@ public class FightingController {
 	private Protagonist currentProtagonist;
 	private Antagonist currentAntagonist;
 	private CombatantSignatures lastTurnOrder;
-	private int round;
+	private int round = 1;
 	private boolean running;
 
 	/**
@@ -55,11 +55,11 @@ public class FightingController {
 		lastTurnOrder = fightingServiceInstance.CombatantInitiative();
 		
 		currentProtagonist = fightingServiceInstance.GetProtagonistObject();
-		
 		currentAntagonist = fightingServiceInstance.GetAntagonistObject();
 		
-		round ++;
+	
 		while(currentProtagonist.isAlive() && currentAntagonist.isAlive()) {
+			round ++;
 			if (!currentProtagonist.equals(lastTurnOrder)) {
 				lastTurnOrder = currentProtagonist;
 				currentProtagonist.gainTurn(1);
