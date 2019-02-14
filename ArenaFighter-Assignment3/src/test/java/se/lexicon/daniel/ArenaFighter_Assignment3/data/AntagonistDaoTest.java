@@ -2,8 +2,6 @@ package se.lexicon.daniel.ArenaFighter_Assignment3.data;
 
 import static org.junit.Assert.*;
 
-import java.time.LocalDate;
-import java.util.List;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,7 +11,6 @@ import se.lexicon.daniel.ArenaFighter_Assignment3.util.RandomGenerator;
 import se.lexicon.daniel.ArenaFighter_Assignment3.data.AntagonistDao;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
 
 public class AntagonistDaoTest {
@@ -63,8 +60,12 @@ public class AntagonistDaoTest {
 	public void testAntagonistInitiative() {
 		int x = 0;
 		while(x <= 100) {
-			assertTrue(antagonistTest.getInitiative() <= AntagonistDaoTest.AntagonistInitiative(antagonistTest) && AntagonistDaoTest.AntagonistInitiative(antagonistTest) <= antagonistTest.getInitiative() + 10);
 			x++;
+			if(x <= 100) 
+			{
+				assertTrue(antagonistTest.getInitiative() <= AntagonistDaoTest.AntagonistInitiative(antagonistTest) && AntagonistDaoTest.AntagonistInitiative(antagonistTest) <= antagonistTest.getInitiative() + 10);
+				System.out.println(x);
+			}
 		}
 	}
 
@@ -72,8 +73,12 @@ public class AntagonistDaoTest {
 	public void testAntagonistMeleeAttack() {
 		int x = 0;
 		while(x <= 100) {
-			assertTrue(antagonistTest.getMeleeAttack() <= AntagonistDaoTest.AntagonistMeleeAttack(antagonistTest) && AntagonistDaoTest.AntagonistMeleeAttack(antagonistTest) <= antagonistTest.getMeleeAttack() + 10);
 			x++;
+			if(x <= 100) 
+			{
+				assertTrue(antagonistTest.getMeleeAttack() <= AntagonistDaoTest.AntagonistMeleeAttack(antagonistTest) && AntagonistDaoTest.AntagonistMeleeAttack(antagonistTest) <= antagonistTest.getMeleeAttack() + 10);
+				System.out.println(x);
+			}
 		}
 	}
 
@@ -81,8 +86,12 @@ public class AntagonistDaoTest {
 	public void testAntagonistMeleeDefence() {
 		int x = 0;
 		while(x <= 100) {
-			assertTrue(antagonistTest.getDodgeAttack() <= AntagonistDaoTest.AntagonistMeleeDefence(antagonistTest) && AntagonistDaoTest.AntagonistMeleeDefence(antagonistTest) <= antagonistTest.getDodgeAttack() + 10);
 			x++;
+			if(x <= 100) 
+			{
+				assertTrue(antagonistTest.getDodgeAttack() <= AntagonistDaoTest.AntagonistMeleeDefence(antagonistTest) && AntagonistDaoTest.AntagonistMeleeDefence(antagonistTest) <= antagonistTest.getDodgeAttack() + 10);
+				System.out.println(x);
+			}
 		}
 	}
 }

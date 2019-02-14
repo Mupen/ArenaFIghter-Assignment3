@@ -55,6 +55,37 @@ public class ProtagonistDao implements ProtagonistDaoSignatures {
 		return currentProtagonist;
 	}
 	
+	
+	@Override
+	public Protagonist saveProtagonistObject(Protagonist currentProtagonist) throws IllegalArgumentException {
+		if(currentProtagonist == null) {
+			throw new IllegalArgumentException();
+		}			
+		if(findProtagonistById(currentProtagonist.getCombatantId()) != null) {
+			throw new IllegalArgumentException("Combatant object with same id exists in storage");
+			
+		}
+		else {
+			protagonistStorage.add(currentProtagonist);
+			return currentProtagonist;
+		}		
+	}
+	
+	@Override
+	public Protagonist findProtagonistById(int protagonistById) {
+		for(Protagonist protagonistObject : protagonistStorage) {
+			if(protagonistObject.getCombatantId() == protagonistById) {
+				return protagonistObject;
+			}
+		}
+		return null;
+	}
+	
+	@Override
+	public List<Protagonist> getProtagonistStorage() {
+		return protagonistStorage;
+	}
+	
 	@Override
 	public void ProtagonistDied() {
 		protagonistStorage.clear();

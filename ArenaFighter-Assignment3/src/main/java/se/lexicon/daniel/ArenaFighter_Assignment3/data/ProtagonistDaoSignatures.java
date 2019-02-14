@@ -14,7 +14,9 @@ public interface ProtagonistDaoSignatures {
 	int ProtagonistMeleeDefence(CombatantSignatures defender);
 	int ProtagonistInitiative(CombatantSignatures currentProtagonist);
 	Protagonist ProtagonistCreation();
-	List<Protagonist> ProtagonistDao();
+	List<Protagonist> getProtagonistStorage();
+	Protagonist findProtagonistById(int protagonistById);
+	Protagonist saveProtagonistObject(Protagonist currentProtagonist) throws IllegalArgumentException;
 
 
 }
