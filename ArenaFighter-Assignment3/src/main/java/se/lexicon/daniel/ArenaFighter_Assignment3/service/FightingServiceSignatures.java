@@ -6,7 +6,6 @@ import se.lexicon.daniel.ArenaFighter_Assignment3.model.Protagonist;
 
 public interface FightingServiceSignatures {
 
-	void CombatantCreation();
 	CombatantSignatures CombatantInitiative();
 	
 	Protagonist GetProtagonistObject();

@@ -20,6 +20,8 @@ public abstract class Combatant implements CombatantSignatures {
     private int will = 4;
     
     // Normal String field
+	private static int sequencer = 0;
+	private final int combatantId;
     private int level = 1;
     private int turn = 0;
     private String name;
@@ -88,6 +90,7 @@ public abstract class Combatant implements CombatantSignatures {
     // Constructor
     public Combatant(String name) {
         this.name = name;
+		this.combatantId = ++sequencer;
     }
     
     public String getName() {return name;}
@@ -212,6 +215,10 @@ public abstract class Combatant implements CombatantSignatures {
 		if (will != other.will)
 			return false;
 		return true;
+	}
+
+	public int getCombatantId() {
+		return combatantId;
 	}
 
 

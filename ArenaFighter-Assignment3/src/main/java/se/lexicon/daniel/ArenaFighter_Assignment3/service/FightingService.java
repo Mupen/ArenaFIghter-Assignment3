@@ -27,12 +27,6 @@ public class FightingService implements FightingServiceSignatures{
 	}
 	
 	@Override
-	public void CombatantCreation() {
-		protagonistDaoSignaturesObject.ProtagonistCreation();
-		antagonistDaoSignaturesObject.AntagonistCreation();
-	}
-	
-	@Override
 	public void CombatantDied(CombatantSignatures currentProtagonist,CombatantSignatures currentAntagonist) {
 		if(currentProtagonist == null) {protagonistDaoSignaturesObject.ProtagonistDied();}
 		if(currentAntagonist == null) {antagonistDaoSignaturesObject.AntagonistDied();}
