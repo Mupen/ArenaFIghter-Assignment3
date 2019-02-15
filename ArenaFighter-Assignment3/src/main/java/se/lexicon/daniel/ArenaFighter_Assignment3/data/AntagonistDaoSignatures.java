@@ -1,6 +1,5 @@
 package se.lexicon.daniel.ArenaFighter_Assignment3.data;
 
-
 import java.util.List;
 
 import se.lexicon.daniel.ArenaFighter_Assignment3.model.Antagonist;
@@ -15,7 +14,6 @@ public interface AntagonistDaoSignatures {
 	int AntagonistMeleeDefence(CombatantSignatures defender);
 	int AntagonistInitiative(CombatantSignatures currentAntagonist);
 	Antagonist AntagonistCreation();
-	
 	Antagonist saveAntagonistObject(Antagonist currentAntagonist) throws IllegalArgumentException;
 	List<Antagonist> getAntagonistStorage();
 	Antagonist findAntagonistById(int antagonistId);

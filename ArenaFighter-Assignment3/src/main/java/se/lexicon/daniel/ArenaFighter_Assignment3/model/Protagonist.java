@@ -1,6 +1,4 @@
 package se.lexicon.daniel.ArenaFighter_Assignment3.model;
-import java.util.List;
-
 import se.lexicon.daniel.ArenaFighter_Assignment3.util.KeyboardInput;
 
 /**
@@ -31,8 +29,8 @@ public class Protagonist extends Combatant implements CombatantSignatures {
 						" [f] add 2 out of 10 to charisma\n" +
 						" [g] add 2 out of 10 to perception\n" +
 						" [h] add 2 out of 10 to will\n" +
-						"\n");
-		
+				"\n");
+
 		while((amout < times)) {
 			amout++;
 			String selection = KeyboardInput.getString(" Your selection... ");

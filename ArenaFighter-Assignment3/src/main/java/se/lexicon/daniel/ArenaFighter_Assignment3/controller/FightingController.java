@@ -10,7 +10,6 @@ import se.lexicon.daniel.ArenaFighter_Assignment3.model.Protagonist;
 import se.lexicon.daniel.ArenaFighter_Assignment3.service.FightingService;
 import se.lexicon.daniel.ArenaFighter_Assignment3.service.FightingServiceSignatures;
 import se.lexicon.daniel.ArenaFighter_Assignment3.util.KeyboardInput;
-import se.lexicon.daniel.ArenaFighter_Assignment3.util.RandomGenerator;
 
 public class FightingController {
 	private FightingServiceSignatures fightingServiceInstance;
@@ -23,12 +22,14 @@ public class FightingController {
 	private boolean running;
 
 	/**
-	 * @param fightingServiceInstance is first fighter
-	 * @param protagonistDaoInstance is the opponent fighter
-	 * @param antagonistDaoInstance is the opponent fighter
-	 * @param currentProtagonist is the Players fighter
-	 * @param currentAntagonist is the Ai's fighter
-	 * @param lastTurnOrder is Players fighter or Ai's fighter
+	 * 
+	 * @param fightingServiceInstance is singleton of FightingService
+	 * @param protagonistDaoInstance is singleton of ProtagonistDao
+	 * @param antagonistDaoInstance is singleton of AntagonistDao
+	 * @param currentProtagonist is Protagonist Object
+	 * @param currentAntagonist is Antagonist Object
+	 * @param lastTurnOrder is Antagonist or Protagonist depending on who's turn it is.
+	 * 
 	 */
 
 	public FightingController() {
@@ -60,16 +61,14 @@ public class FightingController {
 			round ++;
 			if (!currentProtagonist.equals(lastTurnOrder)) {
 				lastTurnOrder = currentProtagonist;
-				currentProtagonist.gainTurn(1);
-				if (currentProtagonist.getHealth() > -currentProtagonist.getConstitution()) {
+				if (currentProtagonist.getHealth() > 0) {
 					fightingServiceInstance.MeleeAttack(currentProtagonist, currentAntagonist, round); 
 				}
 			}
 
 			else if (!currentAntagonist.equals(lastTurnOrder)) {
 				lastTurnOrder = currentAntagonist;
-				currentAntagonist.gainTurn(1);
-				if (currentAntagonist.getHealth() > -currentAntagonist.getConstitution()) {
+				if (currentAntagonist.getHealth() > 0) {
 					fightingServiceInstance.MeleeAttack(currentAntagonist, currentProtagonist, round); 
 				}
 			}
@@ -82,7 +81,6 @@ public class FightingController {
 		System.out.println("");
 		
 		actionSelection();
-
     	fightingServiceInstance.CombatantDied(currentProtagonist, currentAntagonist);
 	}
 	

@@ -1,5 +1,4 @@
 package se.lexicon.daniel.ArenaFighter_Assignment3.model;
-import java.util.List;
 
 import se.lexicon.daniel.ArenaFighter_Assignment3.util.RandomGenerator;
 

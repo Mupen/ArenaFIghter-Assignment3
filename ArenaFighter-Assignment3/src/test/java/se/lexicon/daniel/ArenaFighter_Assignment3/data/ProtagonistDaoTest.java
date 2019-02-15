@@ -50,12 +50,8 @@ public class ProtagonistDaoTest {
 	
 	@Test
 	public void testfindProtagonistById() {
-		for(Protagonist protagonistTest : ProtagonistDaoTest.getProtagonistStorage()) {
-			if(protagonistTest.getCombatantId() == 1) {
-				assertEquals(protagonistTest, ProtagonistDaoTest.GetProtagonist());
-				assertEquals(protagonistTest, ProtagonistDaoTest.findProtagonistById(protagonistTestId1));
-			}
-		}
+		ProtagonistDaoTest.saveProtagonistObject(protagonistTest);
+		assertEquals(protagonistTest, ProtagonistDaoTest.findProtagonistById(protagonistTestId1));
 	}
 
 	@Test

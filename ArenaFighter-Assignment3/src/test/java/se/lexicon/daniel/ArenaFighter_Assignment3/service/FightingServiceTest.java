@@ -9,9 +9,6 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
-
-import java.util.List;
-
 import se.lexicon.daniel.ArenaFighter_Assignment3.data.AntagonistDao;
 import se.lexicon.daniel.ArenaFighter_Assignment3.data.AntagonistDaoSignatures;
 import se.lexicon.daniel.ArenaFighter_Assignment3.data.ProtagonistDao;
@@ -41,10 +38,7 @@ public class FightingServiceTest {
 	
 	// Models
 	private Protagonist protagonistObject;
-	private int protagonistObjectId;
-	
 	private Antagonist antagonistObject;
-	private int antagonistObjectId;
 	
 
 	//Runs BEFORE each test
@@ -62,7 +56,7 @@ public class FightingServiceTest {
 		antagonistObject.GetAntagonistCreation(antagonistObject);
 		antagonistObject.setMeleeDamage(antagonistObject.getWeapon().getWeaponDamage() + antagonistObject.getStrenght());
 		antagonistObject.setMeleeDamageReduction((antagonistObject.getArmor().getArmorDamageReduction() + antagonistObject.getConstitution())/2);
-		antagonistObjectId = antagonistObject.getCombatantId();
+		assertEquals(antagonistObject, AntagonistDaoTest.saveAntagonistObject(antagonistObject));
 		
 		// Protagonist
 		protagonistObject = new Protagonist("Protagonist");
@@ -77,7 +71,7 @@ public class FightingServiceTest {
 		protagonistObject.setArmor("Chainmail", "Chainmail, contrary to popular belief, did not go out of fashion just because plate armor was invented and was often worn as a supplement to plate armor because it was generally much more tried and true than plate armor, which was a constantly evolving science. Chainmail is extremely good armor for avoiding cuts and stabs, but unfortunately the tips of piercing weapons tend to stick through the chain-links, and even a cut that doesn’t penetrate essentially still transfers most kinetic energy to the wearer,", 4); 
 		protagonistObject.setMeleeDamage(protagonistObject.getWeapon().getWeaponDamage() + protagonistObject.getStrenght());
 		protagonistObject.setMeleeDamageReduction((protagonistObject.getArmor().getArmorDamageReduction() + protagonistObject.getConstitution())/2);
-		protagonistObjectId = protagonistObject.getCombatantId();
+		assertEquals(protagonistObject, ProtagonistDaoTest.saveProtagonistObject(protagonistObject));
 	}
 
 	
@@ -98,7 +92,7 @@ public class FightingServiceTest {
     /**
      * 
      * @param ProtagonistDao.getProtagonistDaoInstance() call for @protagonistDaoInstance a singleton of @ProtagonistDao  
-     * @param ntagonistDao.getAntagonistDaoInstance() call for @antagonistDaoInstance a singleton of @AntagonistDao  
+     * @param AntagonistDao.getAntagonistDaoInstance() call for @antagonistDaoInstance a singleton of @AntagonistDao  
      * 	     
      * */
 	
@@ -111,40 +105,90 @@ public class FightingServiceTest {
 	}
 
 	@Test
-	public void testCombatantDied(CombatantSignatures currentProtagonist,CombatantSignatures currentAntagonist) {
-			if(currentProtagonist == null) {protagonistDaoSignaturesObject.ProtagonistDied();}
-			if(currentAntagonist == null) {antagonistDaoSignaturesObject.AntagonistDied();}
+	public void testCombatantDied() { 
+		assertEquals(antagonistObject, AntagonistDaoTest.GetAntagonist());
+		assertEquals(protagonistObject, ProtagonistDaoTest.GetProtagonist());
+		
+		ProtagonistDaoTest.ProtagonistDied();
+		AntagonistDaoTest.AntagonistDied();
+		
+		assertNotSame(antagonistObject, AntagonistDaoTest.GetAntagonist());
+		assertNotSame(protagonistObject, ProtagonistDaoTest.GetProtagonist());
+	} 
+	
+	@Test
+	public void testGetCombatants() { 
+		protagonistObject = null;
+		antagonistObject = null;
+		FightingServiceTest.CombatantDied(protagonistObject, antagonistObject);
+		Antagonist antagonistObject = new Antagonist("Empty");
+		Protagonist protagonistObject = new Protagonist("Empty");
+		assertEquals(protagonistObject, ProtagonistDaoTest.GetProtagonist());
+		assertEquals(antagonistObject, AntagonistDaoTest.GetAntagonist());
+	} 
+	
+	@Test
+	public void TestGetProtagonistObject() { 
+		assertEquals(protagonistObject, FightingServiceTest.GetProtagonistObject());
+	} 
+	
+	@Test
+	public void TestGetAntagonistObject() { 
+		assertEquals(antagonistObject, FightingServiceTest.GetAntagonistObject());
+	} 
+
+	@Test
+	public void testCombatantInitiative() {
+		int x = 0;
+		while(x <= 10) {
+			x++;
+			CombatantSignatures InitiativeWinner = FightingServiceTest.CombatantInitiative();
+			if(protagonistObject.equals(InitiativeWinner)) {
+				assertEquals(protagonistObject, InitiativeWinner);
+				assertNotSame(antagonistObject, InitiativeWinner);
+			}
+			else if(antagonistObject.equals(InitiativeWinner)) {
+				assertEquals(antagonistObject, InitiativeWinner);
+				assertNotSame(protagonistObject, InitiativeWinner);
+			}
+			else {
+				assertNotSame(antagonistObject, InitiativeWinner);
+				assertNotSame(protagonistObject, InitiativeWinner);
+			}
 		}
 	}
 
 	@Test
-	public void testGetProtagonistObject() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetAntagonistObject() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testCombatantInitiative() {
-		fail("Not yet implemented");
-	}
-
-	@Test
 	public void testMeleeAttack() {
-		fail("Not yet implemented");
+		assertTrue(ProtagonistDaoTest.GetProtagonist().getFightingLedgerStorage().isEmpty());
+		FightingServiceTest.MeleeAttack(ProtagonistDaoTest.GetProtagonist(), AntagonistDaoTest.GetAntagonist(), 1);
+		assertEquals(ProtagonistDaoTest.GetProtagonist().getFightingLedgerStorage(), ProtagonistDaoTest.GetProtagonist().getFightingLedgerStorage());
+
+		assertTrue(AntagonistDaoTest.GetAntagonist().getFightingLedgerStorage().isEmpty());
+		FightingServiceTest.MeleeAttack(AntagonistDaoTest.GetAntagonist(), ProtagonistDaoTest.GetProtagonist(), 2);
+		assertEquals(AntagonistDaoTest.GetAntagonist().getFightingLedgerStorage(), AntagonistDaoTest.GetAntagonist().getFightingLedgerStorage());
 	}
 
 	@Test
 	public void testWinnerIs() {
-		fail("Not yet implemented");
+		antagonistObject.decreaseHealth(10, 0);
+		CombatantSignatures winnerIs = FightingServiceTest.WinnerIs(protagonistObject, antagonistObject);
+		if(winnerIs.equals(protagonistObject)) {
+			assertEquals(ProtagonistDaoTest.GetProtagonist(), winnerIs);
+			assertNotSame(AntagonistDaoTest.GetAntagonist(), winnerIs);
+		}
+		antagonistObject.increaseHealth(10);
+		protagonistObject.decreaseHealth(10, 0);
+		winnerIs = FightingServiceTest.WinnerIs(protagonistObject, antagonistObject);
+		if(winnerIs.equals(antagonistObject)) {
+			assertEquals(AntagonistDaoTest.GetAntagonist(), winnerIs);
+			assertNotSame(ProtagonistDaoTest.GetProtagonist(), winnerIs);
+		}
 	}
 
 	@Test
 	public void testLevelUp() {
-		fail("Not yet implemented");
+		CombatantSignatures winnerIs = FightingServiceTest.WinnerIs(antagonistObject, antagonistObject);
+		FightingServiceTest.levelUp(winnerIs);
 	}
-
 }

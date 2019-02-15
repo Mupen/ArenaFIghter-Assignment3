@@ -7,16 +7,12 @@ import se.lexicon.daniel.ArenaFighter_Assignment3.model.Protagonist;
 public interface FightingServiceSignatures {
 
 	CombatantSignatures CombatantInitiative();
-	
 	Protagonist GetProtagonistObject();
 	Antagonist GetAntagonistObject();
 	void MeleeAttack(CombatantSignatures attacker, CombatantSignatures defender, int round);
 	void CombatantDied(CombatantSignatures currentProtagonist, CombatantSignatures currentAntagonist);
 	CombatantSignatures WinnerIs(CombatantSignatures currentProtagonist, CombatantSignatures currentAntagonist);
 	void levelUp(CombatantSignatures winner);
-
-	
-
 
 }
 

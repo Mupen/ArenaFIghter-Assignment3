@@ -9,6 +9,13 @@ import se.lexicon.daniel.ArenaFighter_Assignment3.util.RandomGenerator;
 
 public class AntagonistDao implements AntagonistDaoSignatures {
 
+	/**
+	 * 
+	 * @param antagonistDaoInstance is singleton of AntagonistDao
+	 * @param antagonistStorage is a method that contains a list of antagonistStorage 
+	 * 
+	 */
+	
 	// Static final instance of CourseDao need to be accessed by a method getCourseDaoInstance
 	private static final AntagonistDaoSignatures antagonistDaoInstance = new AntagonistDao();
 	public static AntagonistDaoSignatures getAntagonistDaoInstance() {return antagonistDaoInstance;}
@@ -18,11 +25,19 @@ public class AntagonistDao implements AntagonistDaoSignatures {
 	private List<Antagonist> antagonistStorage;
 	private AntagonistDao() {antagonistStorage = new ArrayList<>();}
 	
+	/**
+	 * 
+	 * @param randomName given value from method RandomGenerator.getRandomName()
+	 * @param currentAntagonist is a object that is is based on Antagonist model 
+	 * @param weaponSelection is a int given value from method RandomGenerator.getRandomDecimal(1, 3);
+	 * @param armorSelection is a int given value from method RandomGenerator.getRandomDecimal(1, 3);
+	 * 
+	 */
+	
 	@Override	
 	public Antagonist AntagonistCreation() {
 		// Declare and Construct an instance of the Antagonist called currentAntagonist
 		String randomName = RandomGenerator.getRandomName(); // placeholder
-		
 		Antagonist currentAntagonist = new Antagonist(randomName);
 		
 	    int weaponSelection = RandomGenerator.getRandomDecimal(1, 3);
@@ -43,7 +58,6 @@ public class AntagonistDao implements AntagonistDaoSignatures {
 		    
 		// Call Antagonist Character Creation Method in Antagonist class
 	    currentAntagonist.GetAntagonistCreation(currentAntagonist);
-	    
         currentAntagonist.setMeleeDamage(currentAntagonist.getWeapon().getWeaponDamage() + currentAntagonist.getStrenght());
         currentAntagonist.setMeleeDamageReduction((currentAntagonist.getArmor().getArmorDamageReduction() + currentAntagonist.getConstitution())/2);
 	    
@@ -51,6 +65,12 @@ public class AntagonistDao implements AntagonistDaoSignatures {
 	    return currentAntagonist;
 	}
 	
+	/**
+	 * 
+	 * @param currentAntagonist is a object that is is based on Antagonist model 
+	 * @param antagonistStorage is a list of Antagonist objects
+	 * 
+	 */
 	
 	@Override
 	public Antagonist saveAntagonistObject(Antagonist currentAntagonist) throws IllegalArgumentException {
@@ -67,44 +87,95 @@ public class AntagonistDao implements AntagonistDaoSignatures {
 		}		
 	}
 	
+	/**
+	 * 
+	 * @param antagonistId is a int with a value from currentAntagonist
+	 * @param currentAntagonist is a object that is is based on Antagonist model
+	 * @param antagonistStorage is a method that contains a list of objects with the data type of Antagonist model 
+	 * 
+	 */
+	
 	@Override
 	public Antagonist findAntagonistById(int antagonistId) {
-		for(Antagonist antagonistObject : antagonistStorage) {
-			if(antagonistObject.getCombatantId() == antagonistId) {
-				return antagonistObject;
+		for(Antagonist currentAntagonist : antagonistStorage) {
+			if(currentAntagonist.getCombatantId() == antagonistId) {
+				return currentAntagonist;
 			}
 		}
 		return null;
 	}
+	
+	/**
+	 * 
+	 * @param antagonistStorage is a method that contains a list of antagonistStorage 
+	 * 
+	 */
 	
 	@Override
 	public List<Antagonist> getAntagonistStorage() {
 		return antagonistStorage;
 	}
 	
+	/**
+	 * 
+	 * @param antagonistStorage is a method that contains a list of antagonistStorage 
+	 * 
+	 */
+	
 	@Override
 	public void AntagonistDied() {
 		antagonistStorage.clear();
 	}
 	
+	/**
+	 * 
+	 * @param antagonistStorage is a method that contains a list of antagonistStorage
+	 * @param currentAntagonist is a object that is is based on Antagonist model
+	 * 
+	 */
+	
 	@Override
 	public Antagonist GetAntagonist() {
-		Antagonist currentAntagonist = antagonistStorage.get(0);
-		return currentAntagonist;
+		if (antagonistStorage.isEmpty()) {
+			Antagonist currentAntagonist = new Antagonist("Empty");
+			return currentAntagonist;
+		}
+		else {
+			Antagonist currentAntagonist = antagonistStorage.get(0);
+			return currentAntagonist;
+		}
 	}
+	
+	/**
+	 * 
+	 * @param currentAntagonist is a object that is is based on Antagonist model
+	 * 
+	 */
 	
 	@Override
 	public int AntagonistInitiative(CombatantSignatures currentAntagonist) {
 		return currentAntagonist.getInitiative() + RandomGenerator.getRandomDecimal(1,10);
 	}
 	
-	@Override
-	public int AntagonistMeleeAttack(CombatantSignatures attacker) {
-		return attacker.getMeleeAttack() + RandomGenerator.getRandomDecimal(1, 10);
-	}
+	/**
+	 * 
+	 * @param currentAntagonist is a object that is is based on Antagonist model
+	 * 
+	 */
 	
 	@Override
-	public int AntagonistMeleeDefence(CombatantSignatures defender) {
-		return defender.getDodgeAttack() + RandomGenerator.getRandomDecimal(1, 10);
+	public int AntagonistMeleeAttack(CombatantSignatures currentAntagonist) {
+		return currentAntagonist.getMeleeAttack() + RandomGenerator.getRandomDecimal(1, 10);
+	}
+	
+	/**
+	 * 
+	 * @param currentAntagonist is a object that is is based on Antagonist model
+	 * 
+	 */
+	
+	@Override
+	public int AntagonistMeleeDefence(CombatantSignatures currentAntagonist) {
+		return currentAntagonist.getDodgeAttack() + RandomGenerator.getRandomDecimal(1, 10);
 	}
 }

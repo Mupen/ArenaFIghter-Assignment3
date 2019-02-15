@@ -48,12 +48,8 @@ public class AntagonistDaoTest {
 	
 	@Test
 	public void testfindAntagonistById() {
-		for(Antagonist antagonistTest : AntagonistDaoTest.getAntagonistStorage()) {
-			if(antagonistTest.getCombatantId() == 1) {
-				assertEquals(antagonistTest, AntagonistDaoTest.GetAntagonist());
-				assertEquals(antagonistTest, AntagonistDaoTest.findAntagonistById(antagonistTestId1));
-			}
-		}
+		AntagonistDaoTest.saveAntagonistObject(antagonistTest);
+		assertEquals(antagonistTest, AntagonistDaoTest.findAntagonistById(antagonistTestId1));
 	}
 
 	@Test
